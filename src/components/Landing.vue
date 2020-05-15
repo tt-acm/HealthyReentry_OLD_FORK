@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Vue Starter</h1>
+    <h1>Healthy Reentry</h1>
     <img src="/imgs/img.png" id="img" />
     <br />
     <button @click="onDecrLcl">Decrement Local</button>
@@ -24,7 +24,6 @@
 <script>
 
 export default {
-  name: 'vuestarter',
   data() {
     return {
       num: 0,
