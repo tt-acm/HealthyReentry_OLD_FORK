@@ -1,7 +1,44 @@
 <template>
   <div>
-    <h1>Healthy Reentry</h1>
-    <img src="/imgs/img.png" id="img" />
+    <!-- <h1>Healthy Reentry</h1> -->
+    <div>
+      <div>
+        <md-badge md-content="1">
+          <md-button class="md-icon-button">
+            <md-icon>notifications</md-icon>
+          </md-button>
+        </md-badge>
+
+        <md-badge class="md-primary" md-content="1">
+          <md-button class="md-icon-button">
+            <md-icon>home</md-icon>
+          </md-button>
+        </md-badge>
+
+        <md-badge md-position="bottom" md-content="2">
+          <md-button class="md-icon-button">
+            <md-icon>home</md-icon>
+          </md-button>
+        </md-badge>
+      </div>
+
+      <div>
+        <md-badge class="md-primary" md-content="12">
+          <md-avatar>
+            <img src="/assets/examples/avatar.png" alt="Avatar">
+          </md-avatar>
+        </md-badge>
+      </div>
+
+      <div>
+        <md-badge class="md-primary md-square" md-position="bottom" md-content="12">
+          <md-button>
+            Button with
+          </md-button>
+        </md-badge>
+      </div>
+    </div>
+    <!-- <img src="/imgs/img.png" id="img" />
     <br />
     <button @click="onDecrLcl">Decrement Local</button>
     &nbsp;&nbsp;
@@ -17,7 +54,7 @@
     <br />
     <button @click="onTestRoute">Test public API route</button>
     &nbsp;&nbsp;
-    <button @click="onTestUserRoute">Test protected User API route</button>
+    <button @click="onTestUserRoute">Test protected User API route</button> -->
   </div>
 </template>
 
