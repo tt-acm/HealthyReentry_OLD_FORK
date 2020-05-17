@@ -3,8 +3,9 @@ import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import Profile from '@/views/Profile.vue';
+import Test from '@/views/Test.vue';
 
-import { authGuard } from "@/auth/authGuard";
+// import { authGuard } from "@/auth/authGuard";
 
 Vue.use(VueRouter);
 
@@ -26,7 +27,13 @@ export default new VueRouter({
       path: '/profile',
       name: 'profile',
       component: Profile,
-      beforeEnter: authGuard
+      // beforeEnter: authGuard
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test,
+      // beforeEnter: authGuard
     }
   ]
 });
