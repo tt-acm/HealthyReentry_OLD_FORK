@@ -1,5 +1,6 @@
 import Vue from "vue";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import axios from "axios";
 
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK = async () => {
@@ -52,11 +53,17 @@ export const useAuth0 = ({
         if (this.isAuthenticated) {
           this.token = await this.auth0Client.getTokenSilently();
           this.jwt = await this.auth0Client.getIdTokenClaims();
-          this.$api.defaults.headers.common["Authorization"] = `Bearer ${this.jwt.__raw}`;
+          axios.interceptors.request.use(
+            request => request.headers["Authorization"] = `Bearer ${this.jwt.__raw}`,
+            error => console.log(error)
+          );
         } else {
           this.token = null;
           this.jwt = null;
-          this.$api.defaults.headers.common["Authorization"] = null;
+          axios.interceptors.request.use(
+            request => request.headers["Authorization"] = null,
+            error => console.log(error)
+          );
         }
       },
       /** Handles the callback when logging in using a redirect */
@@ -79,11 +86,17 @@ export const useAuth0 = ({
         if (this.isAuthenticated) {
           this.token = await this.auth0Client.getTokenSilently();
           this.jwt = await this.auth0Client.getIdTokenClaims();
-          this.$api.defaults.headers.common["Authorization"] = `Bearer ${this.jwt.__raw}`;
+          axios.interceptors.request.use(
+            request => request.headers["Authorization"] = `Bearer ${this.jwt.__raw}`,
+            error => console.log(error)
+          );
         } else {
           this.token = null;
           this.jwt = null;
-          this.$api.defaults.headers.common["Authorization"] = null;
+          axios.interceptors.request.use(
+            request => request.headers["Authorization"] = null,
+            error => console.log(error)
+          );
         }
       },
       /** Authenticates the user using the redirect method */
@@ -130,7 +143,7 @@ export const useAuth0 = ({
 
           await this.updateStateVars();
           if (this.isAuthenticated) {
-            await this.$api.post('/api/users', this.user);
+            await axios.post('/api/users', this.user);
           }
 
           // Notify subscribers that the redirect callback has happened, passing the appState

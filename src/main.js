@@ -23,8 +23,8 @@ import { Auth0Plugin } from "./auth";
 
 async function main() {
 
-  let resp = await fetch('/api/auth0-secrets');
-  let secrets = await resp.json();
+  let resp = await axios.get('/api/auth0-secrets');
+  let secrets = resp.data;
   let domain = secrets.AUTH0_DOMAIN;
   let clientId = secrets.AUTH0_CLIENT_ID;
 
