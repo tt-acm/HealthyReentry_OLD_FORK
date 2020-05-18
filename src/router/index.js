@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue';
 // import Test from '@/views/Test.vue';
 import Intro from '@/views/Intro.vue';
 import Disclosure from '@/views/Disclosure.vue';
+import Menu from '@/views/Menu.vue';
 
 // import { authGuard } from "@/auth/authGuard";
 
@@ -54,6 +55,11 @@ export default new VueRouter({
       path: '/disclosure',
       name: 'disclosure',
       component: Disclosure
+    },
+    {
+      path: '/menu',
+      name: 'menu',
+      component: Menu
     }
   ]
 });
