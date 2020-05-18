@@ -1,4 +1,3 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
 
 
@@ -23,7 +22,7 @@ const mongoose = require('mongoose');
  *            type: Date
  *            description: Date of the status reported.
  *        example:
- *           user: #ref to User
+ *           user: $ref to User
  *           status: 0
  *           date: Wed Jun 29 2011 11:52:48 GMT-0500 (Central Daylight Time)
  */
@@ -65,7 +64,6 @@ statusSchema.pre("save", function(next, user, callback) {
 
     next(callback);
 });
-
 
 
 module.exports = mongoose.model('Status', statusSchema);
