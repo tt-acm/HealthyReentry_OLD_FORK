@@ -1,17 +1,16 @@
 <template>
-  <div class="page-container">
-    
+  <div>
+    <Landing />
   </div>
-
 </template>
 
 <script>
-// import Landing from '@/components/Landing.vue';
+import Landing from '@/components/Landing.vue';
 
 export default {
   name: 'home',
   components: {
-    // Landing
+    Landing
   }
 }
 </script>
