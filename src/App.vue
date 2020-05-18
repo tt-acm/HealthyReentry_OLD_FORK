@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Navbar from '@/partials/Navbar.vue'
+// import Navbar from '@/partials/Navbar.vue'
 
 export default {
   name: 'App',
@@ -93,4 +93,17 @@ export default {
 </script>
 
 <style>
+#appFooter {
+  position: fixed;
+  left: 0;
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(52, 58, 64);
+  /* color: white; */
+  /* text-align: center; */
+}
+.md-app {
+  height: 100vh;
+}
 </style>
