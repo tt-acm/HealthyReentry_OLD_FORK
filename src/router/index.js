@@ -8,7 +8,7 @@ import Intro from '@/views/Intro.vue';
 import Disclosure from '@/views/Disclosure.vue';
 import Menu from '@/views/Menu.vue';
 
-// import { authGuard } from "@/auth/authGuard";
+import { authGuard } from "@/auth/authGuard";
 
 Vue.use(VueRouter);
 
