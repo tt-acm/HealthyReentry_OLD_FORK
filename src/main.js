@@ -4,6 +4,9 @@ import router from '@/router';
 import store from '@/store';
 import axios from 'axios';
 
+import 'bootstrap';
+import './css/app.scss';
+
 
 import VueMaterial from 'vue-material'
 // import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'

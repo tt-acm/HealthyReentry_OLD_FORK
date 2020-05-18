@@ -1,17 +1,16 @@
 <template>
-  <div class="page-container" id="app">
+  <div id="app">
     <!-- <Navbar /> -->
     <!-- <hr /> -->
       <md-app>
         <md-app-toolbar class="md-primary" id="appHeader" style="background-color:rgb(52, 58, 64);">
           <a class="md-title" href="/">
-            <!-- <span class="">Encounter</span> -->
-            <span>Encounter</span>
-            <small style="color:lightblue"><i>alpha</i></small>
+            <span>Healthy Reentry</span>
+            <small style="color:lightblue;margin-left:4px"><i>alpha</i></small>
           </a>
 
-          <md-badge class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">
-            <md-menu md-size="medium" md-align-trigger>
+          <md-badge v-if="$auth.isAuthenticated && $auth.user" class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">
+            <md-menu md-size="small" md-align-trigger>
               <md-button class="md-icon-button" style="width=32px" md-menu-trigger>
                 <md-avatar style="transform: scale(0.8);">
                   <img src="https://gravatar.com/avatar/4dacc85086497a31cf2c646031d2cb01?d=retro" alt="Avatar">
@@ -19,29 +18,21 @@
               </md-button>
 
               <md-menu-content>
-                <md-menu-item v-if="user" disabled>{{user.sso.profile.name}}</md-menu-item>
+                <md-menu-item disabled>{{$auth.user.name}}</md-menu-item>
                 <md-menu-item>Profile</md-menu-item>
-                <md-menu-item>Log out</md-menu-item>
+                <md-menu-item @click="logout()">Log out</md-menu-item>
               </md-menu-content>
             </md-menu>
           </md-badge>
+          <a v-else class="md-title md-dense" style="margin-left:auto" @click="login()" href="#!">
+            Login
+          </a>
 
         </md-app-toolbar>
 
         <md-app-content>
-          <h2>Mirror Subpage</h2>
-          <md-tabs md-sync-route>
-            <md-tab id="tab-pages-1" md-label="About" to="/about">Subpage 1</md-tab>
-            <md-tab id="tab-pages-2" md-label="Test" to="/test">Subpage 2</md-tab>
-          </md-tabs>
+          <button class="btn btn-primary" @click="getUser()"> getuser</button>
           <router-view />
-          <div>
-            <!-- <md-bottom-bar md-sync-route>
-              <md-bottom-bar-item to="/components/bottom-bar" exact md-label="Home" md-icon="home"></md-bottom-bar-item>
-              <md-bottom-bar-item to="/components/bottom-bar/posts" md-label="Posts" md-icon="/assets/icon-whatshot.svg"></md-bottom-bar-item>
-              <md-bottom-bar-item to="/components/bottom-bar/favorites" md-label="Favorites" md-icon="favorite"></md-bottom-bar-item>
-            </md-bottom-bar> -->
-          </div>
         </md-app-content>
 
 
@@ -81,6 +72,21 @@ export default {
     //   console.log("data", data);
     //   $("#core-logo-import").html(data);
     // });
+  },
+  methods: {
+    getUser() {
+      console.log("getting user", this.$auth.isAuthenticated);
+      console.log("this.user", this.$auth.user);
+
+    },
+    login() {
+      this.$auth.loginWithRedirect();
+    },
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
+    }
   }
 }
 </script>
