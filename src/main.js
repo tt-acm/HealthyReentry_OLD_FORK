@@ -15,6 +15,8 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 // import 'vue-material/dist/components/index.css'
 
+window.$ = window.jQuery = require('jquery');
+
 Vue.use(VueMaterial);
 // Vue.use(MdButton)
 // Vue.use(MdContent)
