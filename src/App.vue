@@ -13,7 +13,8 @@
             <md-menu md-size="small" md-align-trigger>
               <md-button class="md-icon-button" style="width=32px" md-menu-trigger>
                 <md-avatar style="transform: scale(0.8);">
-                  <img src="https://gravatar.com/avatar/4dacc85086497a31cf2c646031d2cb01?d=retro" alt="Avatar">
+                  <!-- <img src="https://gravatar.com/avatar/4dacc85086497a31cf2c646031d2cb01?d=retro" alt="Avatar"> -->
+                  <img :src="$auth.user.picture" alt="Avatar">
                 </md-avatar>
               </md-button>
 
@@ -31,7 +32,7 @@
         </md-app-toolbar>
 
         <md-app-content>
-          <button class="btn btn-primary" @click="getUser()"> getuser</button>
+          <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
           <router-view />
         </md-app-content>
 
@@ -72,6 +73,7 @@ export default {
     //   console.log("data", data);
     //   $("#core-logo-import").html(data);
     // });
+    // console.log("window.jquery", window);
   },
   methods: {
     getUser() {
