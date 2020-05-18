@@ -1,6 +1,4 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
-
 
 
 /**
@@ -10,7 +8,7 @@ const mongoose = require('mongoose');
  *      User:
  *        type: object
  *        required:
- *          - name
+ *          - username
  *        properties:
  *          _id:
  *            type: ObjectId
@@ -39,7 +37,6 @@ const mongoose = require('mongoose');
  *           bio: My spidey sense tingles if you don't write docs.
  *           permissions: { admin: true, read: true, write: false }
  */
-
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -68,7 +65,6 @@ const UserSchema = new mongoose.Schema({
     }
   }
 }, {timestamps: true});
-
 
 
 module.exports = mongoose.model('User', UserSchema);
