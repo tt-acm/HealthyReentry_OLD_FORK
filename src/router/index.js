@@ -16,7 +16,15 @@ export default new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      // beforeEnter: (to, from, next) => {
+      //   // if (store.state.user) {
+      //   //   console.log("store.state.user.dateOfConsent", store.state.user.dateOfConsent);
+      //   //   if (!store.state.user.dateOfConsent) return next('/disclosure');
+      //   //   else return next('/menu');
+      //   // }
+      //   // return next();
+      // }
     },
     {
       path: '/about',
