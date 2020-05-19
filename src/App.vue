@@ -10,29 +10,19 @@
 
 
 
-  <md-toolbar class="md-primary md-dense" id="appFooter" style="height:40px">
-    <span class="md-subheading md-layout" style="margin-left:auto;margin-top:0px;margin-bottom:0px">
-      <a href="https://coresso.thorntontomasetti.com/eula" target="_blank" style="margin-right: 16px;">
-        <span style="color:white;">License</span>
-      </a>
-      <a href="http://core.thorntontomasetti.com" id="core-logo-import" target="_blank" style="margin-right: 8px;margin-top: 0px;">
-        <md-icon md-src="/imgs/CORE.svg" style="width:auto" />
-      </a>
-      <div>
-        &nbsp;&nbsp;&copy; {{new Date().getFullYear()}}
-      </div>
-    </span>
-  </md-toolbar>
+  <Footer />
 </div>
 </template>
 
 <script>
 import Navbar from '@/partials/Navbar.vue'
+import Footer from '@/partials/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   data() {
     return {};
@@ -62,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #appFooter {
   position: fixed;
   left: 0;
