@@ -38,23 +38,25 @@ const mongoose = require('mongoose');
  *           permissions: { admin: true, read: true, write: false }
  */
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    index: true
-  },
+  // username: {
+  //   type: String,
+  //   unique: true,
+  //   required: true,
+  //   index: true
+  // },
   name: {
     type: String,
+    required: true,
     index: true,
     default: ""
   },
   email: {
     type: String,
+    unique: true,
     index: true,
     default: ""
   },
-  bio: {
+  office: {
     type: String,
     default: ""
   },
@@ -63,7 +65,8 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     }
-  }
+  },
+  dateOfConsent: Date
 }, {timestamps: true});
 
 
