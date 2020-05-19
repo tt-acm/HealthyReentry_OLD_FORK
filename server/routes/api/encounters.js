@@ -1,12 +1,11 @@
 const router = require('express').Router();
 
-const User = require('../../models/User');
-const Encounter = require('../../models/Encounter');
-
 const sgClient = require("../../lib/sgClient");
 const variables = require("../../util/variables");
 const eg = require('../../lib/build_encounter_graph');
 
+const User = require('../../models/User');
+const Encounter = require('../../models/Encounter');
 
 
 
@@ -41,7 +40,7 @@ router.post("/add-one", function (req, res) {
     } else if (req.body.email) {
 
         User.findOne({
-                "sso.email": req.body.email.toLowerCase()
+                "email": req.body.email.toLowerCase()
             })
             .exec(function (err, user) {
                 if (!err) {
@@ -149,8 +148,6 @@ router.post("/add-many", function (req, res) {
 
         function isDone() {
 
-            console.log("ENCOUNTERS", encounters);
-
             if (encounters.length === numEncounters) {
                 Encounter.insertMany(encounters, function (err, docs) {
                     console.log(docs);
@@ -185,16 +182,16 @@ router.post("/add-many", function (req, res) {
 router.get("/find-frequent-encounters", function (req, res) {
     //https://docs.mongodb.com/manual/tutorial/query-arrays/
 
-    var todayDate = new Date();
     var checkDate = new Date();
     var pastDate = checkDate.getDate() - 7;
     checkDate.setDate(pastDate);
     const today = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
-    let include = { // returns only email, profile name, and _id
+    // returns only email, profile name, and _id
+    let include = {
         "_id": 1,
-        "sso.email": 1,
-        "sso.profile.name": 1
+        "email": 1,
+        "name": 1
     }
 
     Encounter.find({
@@ -243,9 +240,7 @@ router.get("/find-frequent-encounters", function (req, res) {
  */
 router.post("/get-graph", function (req, res) {
 
-    eg(req.user.sso.email).then(function (graph) {
-
-        console.log("Graph received", graph);
+    eg(req.user.email).then(function (graph) {
 
         var headers = "Email, Number Of Direct Encounters, Degree of Separation , Status";
 
@@ -257,14 +252,13 @@ router.post("/get-graph", function (req, res) {
 
 
         csv = headers + '\n' + csv;
-        //console.log("csv", csv);
         let buff = new Buffer(csv);
         let base64data = buff.toString('base64');
 
         ///EMAIL SERVICE
         // Admin List to Change
         var title = "Encounter Alert - ALPHA TESTING";
-        var thisHTML = "<div><p><strong>Attention:</strong><br><br>" + req.user.sso.profile.name + " reported their COVID_19 status as <i>" + req.body.status + ".</i><br><br>Attached are all of the employee’s encounters that have occurred within the last 14 days.</p></div>";
+        var thisHTML = "<div><p><strong>Attention:</strong><br><br>" + req.user.name + " reported their COVID_19 status as <i>" + req.body.status + ".</i><br><br>Attached are all of the employee’s encounters that have occurred within the last 14 days.</p></div>";
         
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -272,8 +266,7 @@ router.post("/get-graph", function (req, res) {
         var year = dateObj.getUTCFullYear();
         
         var newdate = month + "/" + day + "/"+ year;
-        var fileName = req.user.sso.profile.name + "-" + req.body.status + "-"+ newdate + ".csv";
-        // attachment str(b64data,'utf-8')
+        var fileName = req.user.name + "-" + req.body.status + "-"+ newdate + ".csv";
         const mailOptions = {
             to: variables.ADMIN_USERS,
             from: process.env.SENDGRID_EMAIL,
@@ -282,7 +275,7 @@ router.post("/get-graph", function (req, res) {
             html: thisHTML,
             "attachments": [{
                 "content": base64data,
-                "content_id": "Example Content ID",
+                "content_id": "",
                 "disposition": "attachment",
                 "filename": fileName,
                 "type": "text/csv"
@@ -306,7 +299,6 @@ router.post("/get-graph", function (req, res) {
                     reject();
                 }
 
-                console.log("sent");
                 resolve();
             });
 

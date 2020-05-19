@@ -37,7 +37,7 @@ router.get("/consent-signed", function (req, res) {
           // send copy of consent
 
 
-          sendEmail(req.user.sso.email, req.user.sso.profile.name).then(function () {
+          sendEmail(req.user.email, req.user.profile.name).then(function () {
             // return res.send(updatedUser);
             // console.log("copy of consent sent");
           });

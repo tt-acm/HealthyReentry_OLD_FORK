@@ -38,8 +38,8 @@ router.get("/get-all-users", async function(req, res) {
   let include = {
     "_id": 1,
     "dateOfConsent": 1,
-    "sso.profile.name": 1,
-    "sso.profile.location": 1
+    "name": 1,
+    "office": 1
   }
 
   const users = await User.find({}, include).exec();
@@ -111,7 +111,6 @@ router.post("/update-users", async function(req, res) {
       user: user,
       statusEnum: statusEnum
     };
-
 
     // dont holdup the response for current trigger to percolate
     triggerUpdateQueue.push(triggerData);

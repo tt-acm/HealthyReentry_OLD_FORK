@@ -83,7 +83,7 @@ function buildEncounterGraph(users, encounters) {
         var countEnc = 0;
         // Load Vertices (users)
         users.forEach(function (user) {
-            g.setNode(user.sso.email, user);
+            g.setNode(user.email, user);
             countUsers += 1;
             isDone();
         });

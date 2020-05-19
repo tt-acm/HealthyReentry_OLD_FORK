@@ -39,7 +39,7 @@ async function triggerUpdates(triggerData, byAdmin) {
     let statusEnum = triggerData.statusEnum;
     let status = enumStatusMap.filter(i => i.code === statusEnum)[0];
 
-    let adminEmailContent = adminTemplate.replace('<USER_NAME>', user.sso.profile.name)
+    let adminEmailContent = adminTemplate.replace('<USER_NAME>', user.name)
                                          .replace('<STATUS_LABEL>', status.label)
                                          .replace('<TRACE_DAYS>', variables.INCUBATION_PERIDOD);
     let userConfContent = userConfTemplate.replace('<STATUS_LABEL>', status.label);
@@ -51,14 +51,14 @@ async function triggerUpdates(triggerData, byAdmin) {
     sub = "Your status color has been changed";
     // inform the user
     if (byAdmin) {
-      await sendEmail([user.sso.email], sub, adminUpdateContent);
+      await sendEmail([user.email], sub, adminUpdateContent);
     } else {
-      await sendEmail([user.sso.email], sub, userConfContent);
+      await sendEmail([user.email], sub, userConfContent);
     }
 
     if (statusEnum === 1) // Status Reported Orange
     {
-      let graph = await eg(user.sso.email);
+      let graph = await eg(user.email);
 
       let csv = csvHeader;
 
@@ -73,7 +73,7 @@ async function triggerUpdates(triggerData, byAdmin) {
       let d = new Date();
       let formattedDate = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
       let attachment = new Buffer(csv).toString('base64');
-      let filename = `Encounter_${formattedDate}_${status.label}_${user.sso.profile.name}.csv`;
+      let filename = `Encounter_${formattedDate}_${status.label}_${user.name}.csv`;
       sub = "Employee’s log";
       await sendEmail(variables.ADMIN_USERS, sub, adminEmailContent, attachment, filename);
 
@@ -83,7 +83,7 @@ async function triggerUpdates(triggerData, byAdmin) {
         await sendEmail(emails, sub, orangeContent);
       }
     } else { // Status Reported Red
-      let graph = await eg(user.sso.email);
+      let graph = await eg(user.email);
 
       let csv = csvHeader;
 
@@ -116,7 +116,7 @@ async function triggerUpdates(triggerData, byAdmin) {
         // inform HR along with csv
         let d = new Date();
         let formattedDate = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-        let filename = `Encounter_${formattedDate}_${status.label}_${user.sso.profile.name}.csv`;
+        let filename = `Encounter_${formattedDate}_${status.label}_${user.name}.csv`;
         let attachment = new Buffer(csv).toString('base64');
         sub = "Employee’s log";
         await sendEmail(variables.ADMIN_USERS, sub, adminEmailContent, attachment, filename);
