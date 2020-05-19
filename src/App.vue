@@ -2,8 +2,8 @@
 <div class="page-container" id="app">
   <Navbar />
   <!-- <hr /> -->
-
-  <md-content class="container">
+  <!-- <md-content class="mx-3" style="max-width:600px"> -->
+  <md-content class="mx-auto" style="max-width:600px">
     <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
     <router-view />
   </md-content>
@@ -67,8 +67,9 @@ export default {
 /* #app {
   height: 100vh-80px;
 } */
-.container {
-  padding-top:70px;
+.md-content {
+  padding-top:80px;
+  padding-bottom:20px;
 }
 
 </style>

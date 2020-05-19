@@ -91,17 +91,29 @@
 
   <br>
   <!-- Button trigger modal -->
-  <button v-if="!disableSubmitDate && !disableSubmitUser" type="button" class="btn btn-primary btn-lg btn-block text-white pl-0 pr-2" data-toggle="modal" data-target="#exampleModalLong">
+  <!-- <button v-if="!disableSubmitDate && !disableSubmitUser" type="button" class="btn btn-primary btn-lg btn-block text-white pl-0 pr-2" data-toggle="modal" data-target="#exampleModalLong">
     Next
   </button>
   <div v-else class="btn btn-lg btn-block text-white" style="backgroundColor:#b8b8b8">
     <md-tooltip md-direction="top" class="bg-danger">Cannot click Next; enter a name above.</md-tooltip>
     Next (disabled)
-  </div>
+  </div> -->
+  <md-list>
+    <md-list-item class="py-0 mx-auto">
+      <md-button class="md-primary md-raised" @click="showDialog = true" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn">
+        <h6 class="mb-0">Next</h6>
+      </md-button>
+    </md-list-item>
 
-  <div class="text-center mt-1 btn btn-lg btn-block">
-    <router-link :to="{ name: 'menu' }"> Back </router-link>
-  </div>
+    <!-- <div class="text-center mt-1 btn btn-lg btn-block">
+      <router-link :to="{ name: 'menu' }"> Back </router-link>
+    </div> -->
+    <md-list-item class="mx-auto py-0">
+      <!-- <md-button class="md-primary mx-auto"> -->
+        <router-link :to="{ name: 'menu' }"> Back </router-link>
+      <!-- </md-button> -->
+    </md-list-item>
+  </md-list>
 
   <br>
   <br>
@@ -207,6 +219,9 @@ export default {
 
   },
   mounted() {
+    // const buttonWidth = screen.width*0.7 > 280? screen.width*0.7 : 280;
+
+    window.$("#nextBtn").css("width", 280 + 'px');
     // console.log("this.direct", this.$browserDetect.isChromeIOS);
     // console.log("this route param", this.$route.params);
   },
@@ -226,7 +241,8 @@ export default {
       encountersToday: null,
       isGroup: false,
       // showDatePicker: false,
-      frequentEncounters: null
+      frequentEncounters: null,
+      showDialog: false
     };
   },
   watch: {
@@ -395,5 +411,9 @@ export default {
 } */
 /* .md-theme-default{
   height: 400px;
+} */
+/* .md-list-item-content {
+  padding-top: 0px;
+  padding-bottom: 0px;
 } */
 </style>
