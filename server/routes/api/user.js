@@ -1,26 +1,24 @@
 const router = require('express').Router();
-
-const User = require('../../models/User');
-
 const fs = require('fs');
 const sgClient = require("server/lib/sgClient");
 
+const User = require('../../models/User');
 
 
 router.post("/user-by-email", function(req, res) {
 
-  let include = { // returns only email, profile name, and _id
+  // returns only email, profile name, and _id
+  let include = {
     "_id": 1,
-    "sso.email": 1,
-    "sso.profile.name": 1
+    "email": 1,
+    "name": 1
   }
 
   User.findOne({
-    "sso.email": req.body.email
+    "email": req.body.email
   }, include)
       .exec(function(err, user) {
           if (err) {
-              //console.log(err);
               return res.status(500).send();
           }
           return res.json(user);
@@ -29,11 +27,9 @@ router.post("/user-by-email", function(req, res) {
 
 
 router.get("/consent-signed", function (req, res) {
-  // console.log("getting here", req.user.id);
   User.findById(req.user.id)
     .exec(function (err, user) {
       if (!err) {
-        // console.log("user", user);
         user.dateOfConsent = new Date();
 
         user.save(function (error, updatedUser) {
@@ -63,13 +59,12 @@ router.get("/consent-signed", function (req, res) {
       var firstName = userName.split(' ')[0];
       var thisHTML = "<div><p>"+ firstName+ ",<br><br>Thank you for enrolling in the Encounter application. Attached is the disclosure and consent file you reviewed and agreed to.</p></div>";
 
-      const path = 'server/lib/assets/Disclosure.pdf';
+      const path = './server/assets/Disclosure.pdf';
       var attachment = fs.readFileSync(path);
 
 
       let buff = new Buffer(attachment);
       let base64data = buff.toString('base64');
-      console.log("about to");
 
       // attachment str(b64data,'utf-8')
       const mailOptions = {
@@ -87,7 +82,6 @@ router.get("/consent-signed", function (req, res) {
         }]
 
       };
-      // console.log("mailOptions", mailOptions);
 
       // https://github.com/sendgrid/sendgrid-python/blob/master/USAGE.md#post-mailsend
       sgClient.sendMultiple(mailOptions, function (err) {
@@ -110,12 +104,12 @@ router.get("/consent-signed", function (req, res) {
 //get all users
 router.get("/get-all", function (req, res) {
 
-  let include = { // returns only email, profile name, and _id
+  // returns only email, profile name, and _id
+  let include = {
     "_id": 1,
-    "sso.email": 1,
-    "sso.profile.name": 1
+    "email": 1,
+    "name": 1
   }
-
 
   User.find({
       _id: {
@@ -128,7 +122,6 @@ router.get("/get-all", function (req, res) {
     })
 
 });
-
 
 
 module.exports = router;
