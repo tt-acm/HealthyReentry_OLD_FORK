@@ -11,12 +11,12 @@ const enumStatusMap = require("../util/enumStatusMap");
 
 const fs = require('fs');
 
-const orangeContent = fs.readFileSync("../assets/email_templates/orangeContent.html").toString("utf-8");
-const redContent = fs.readFileSync("../assets/email_templates/redContent.html").toString("utf-8");
+const orangeContent = fs.readFileSync("./server/assets/email_templates/orangeContent.html").toString("utf-8");
+const redContent = fs.readFileSync("./server/assets/email_templates/redContent.html").toString("utf-8");
 
-const adminTemplate = fs.readFileSync("../assets/email_templates/adminTemplate.html").toString("utf-8");
-const userConfTemplate = fs.readFileSync("../assets/email_templates/userConfTemplate.html").toString("utf-8");
-const adminUpdateTemplate = fs.readFileSync("../assets/email_templates/adminUpdateTemplate.html").toString("utf-8");
+const adminTemplate = fs.readFileSync("./server/assets/email_templates/adminTemplate.html").toString("utf-8");
+const userConfTemplate = fs.readFileSync("./server/assets/email_templates/userConfTemplate.html").toString("utf-8");
+const adminUpdateTemplate = fs.readFileSync("./server/assets/email_templates/adminUpdateTemplate.html").toString("utf-8");
 
 function nodeToCsvLine(node) {
   let status = enumStatusMap.filter(i => i.code === node.status)[0];
