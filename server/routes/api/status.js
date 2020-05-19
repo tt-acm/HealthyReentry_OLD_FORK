@@ -1,23 +1,10 @@
-'use strict';
-var MEANLib = require("@ttcorestudio/mexn-server");
-var middlewareRouter = MEANLib.modules.express.Router();
-var router = MEANLib.modules.express.Router();
-module.exports = middlewareRouter;
+const router = require('express').Router();
 
-var Status = require("server/db/models/Status/_Status");
+const Status = require('../../models/Status');
 
-const triggerUpdates = require('server/lib/trigger_updates');
+const triggerUpdates = require('../../lib/trigger_updates');
 
 
-middlewareRouter.use("/", function (req, res, next) {
-  return next();
-}, router);
-
-/**
-body = {
-    status:0,
-}
-*/
 router.post("/report", function (req, res) {
 
   var status = new Status({
@@ -54,3 +41,7 @@ router.get("/get-current", function (req, res) {
     });
 
 });
+
+
+
+module.exports = router;

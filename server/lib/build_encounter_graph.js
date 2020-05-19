@@ -1,13 +1,10 @@
 const graphlib = require('@dagrejs/graphlib');
-const csv = require('csvtojson');
 
-var Encounter = require("server/db/models/Encounter/_Encounter");
-var User = require("server/db/models/User/_User");
-var Status = require("server/db/models/Status/_Status");
+const Encounter = require('../models/Encounter');
+const Status = require('../models/Status');
+const User = require('../models/User');
 
-const variables = require("server/util/variables");
-
-var Promise = MEANLib.modules.bluebird;
+const variables = require("../util/variables");
 
 // populate users array
 const getAllUsers = function() {

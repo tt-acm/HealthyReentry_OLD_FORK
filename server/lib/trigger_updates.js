@@ -1,22 +1,22 @@
 'use strict';
 
-var User = require("server/db/models/User/_User");
-var Status = require("server/db/models/Status/_Status");
+const User = require('../models/User');
+const Status = require('../models/Status');
 
-const sgClient = require("server/lib/sgClient");
-const eg = require('server/lib/build_encounter_graph');
+const sgClient = require("../lib/sgClient");
+const eg = require('../lib/build_encounter_graph');
 
-const variables = require("server/util/variables");
-const enumStatusMap = require("server/util/enumStatusMap");
+const variables = require("../util/variables");
+const enumStatusMap = require("../util/enumStatusMap");
 
 const fs = require('fs');
 
-const orangeContent = fs.readFileSync("server/assets/email_templates/orangeContent.html").toString("utf-8");
-const redContent = fs.readFileSync("server/assets/email_templates/redContent.html").toString("utf-8");
+const orangeContent = fs.readFileSync("../assets/email_templates/orangeContent.html").toString("utf-8");
+const redContent = fs.readFileSync("../assets/email_templates/redContent.html").toString("utf-8");
 
-const adminTemplate = fs.readFileSync("server/assets/email_templates/adminTemplate.html").toString("utf-8");
-const userConfTemplate = fs.readFileSync("server/assets/email_templates/userConfTemplate.html").toString("utf-8");
-const adminUpdateTemplate = fs.readFileSync("server/assets/email_templates/adminUpdateTemplate.html").toString("utf-8");
+const adminTemplate = fs.readFileSync("../assets/email_templates/adminTemplate.html").toString("utf-8");
+const userConfTemplate = fs.readFileSync("../assets/email_templates/userConfTemplate.html").toString("utf-8");
+const adminUpdateTemplate = fs.readFileSync("../assets/email_templates/adminUpdateTemplate.html").toString("utf-8");
 
 function nodeToCsvLine(node) {
   let status = enumStatusMap.filter(i => i.code === node.status)[0];

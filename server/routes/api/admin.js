@@ -1,12 +1,9 @@
-'use strict';
-var MExNServer = require("@ttcorestudio/mexn-server");
-var router = MExNServer.modules.express.Router();
-module.exports = router;
+const router = require('express').Router();
 
-var User = require("server/db/models/User/_User");
-var Status = require("server/db/models/Status/_Status");
+const User = require('../../models/User');
+const Status = require('../../models/Status');
 
-const triggerUpdates = require('server/lib/trigger_updates');
+const triggerUpdates = require('../../lib/trigger_updates');
 
 
 
@@ -151,3 +148,4 @@ async function triggerQueue() {
 }
 
 
+module.exports = router;

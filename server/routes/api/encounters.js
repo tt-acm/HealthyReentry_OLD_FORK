@@ -1,25 +1,14 @@
-'use strict';
-var MEANLib = require("@ttcorestudio/mexn-server");
-var moment = require("moment");
-var middlewareRouter = MEANLib.modules.express.Router();
-var router = MEANLib.modules.express.Router();
-module.exports = middlewareRouter;
+const router = require('express').Router();
 
-const sgClient = require("server/lib/sgClient");
-const variables = require("server/util/variables");
+const User = require('../../models/User');
+const Encounter = require('../../models/Encounter');
 
-var Encounter = require("server/db/models/Encounter/_Encounter");
-var User = require("server/db/models/User/_User");
-
-var Promise = MEANLib.modules.bluebird;
-
-const eg = require('server/lib/build_encounter_graph');
+const sgClient = require("../../lib/sgClient");
+const variables = require("../../util/variables");
+const eg = require('../../lib/build_encounter_graph');
 
 
 
-middlewareRouter.use("/", function (req, res, next) {
-    return next();
-}, router);
 
 /**
  * @api {post} /api/encounters/add-one
@@ -242,96 +231,6 @@ router.get("/find-frequent-encounters", function (req, res) {
 
 
 
-// OBSOLUTE METHOD use get-graph instead
-// router.post("/get-encounters", function (req, res) {
-//     //https://docs.mongodb.com/manual/tutorial/query-arrays/
-//     var checkDate = new Date();
-//     var pastDate = checkDate.getDate() - 14;
-//     checkDate.setDate(pastDate);
-//     // TODO recursive get tree of encounters...
-//     Encounter.find({
-//             "users": req.user._id,
-//             "date": {
-//                 "$gte": checkDate
-//             }
-//         }).populate("users")
-//         .exec(function (err, encounters) {
-//             var directEncounters = []; // {email: , name: , date:, degree of Separation: 1 }
-//             encounters.forEach(function (e) {
-//                 e.users.forEach(function (user) {
-//                     //var index = directEncounters.findIndex(obj => obj._id== user._id); // dont check the
-//                     if (user.id != req.user.id) { // index === -1 &&
-//                         var data = {
-//                             "email": user.sso.email,
-//                             "name": user.sso.profile.name,
-//                             "date": e.date.toISOString().substring(0, 10),
-//                             "DES": 1
-//                         };
-//                         directEncounters.push(data);
-//                     }
-
-
-//                 })
-//             });
-
-//             // var headers =  JSON.stringify(Object.keys(directEncounters[0]));
-//             var headers = "Email, Name, Date, Degree of Separation";
-
-//             var csv = directEncounters.map(function (d) {
-//                     return JSON.stringify(Object.values(d));
-//                 })
-//                 .join('\n')
-//                 .replace(/(^\[)|(\]$)/mg, '');
-
-//             csv = headers + '\n' + csv;
-//             let buff = new Buffer(csv);
-//             let base64data = buff.toString('base64');
-
-//             ///EMAIL SERVICE
-//             // Admin List to Change
-//             var title = "Encounter Alert - ALPHA TESTING";
-//             var thisHTML = "<div><p><strong>Attention:</strong>" + req.user.sso.profile.name + " reported their COVID_19 status as " + req.body.status + "<br>Attached are all encounters that have occurred within the last 14 days.</p></div>";
-//             var emails = ["eertugrul@thorntontomasetti.com", "bhowes@thorntontomasetti.com", "hsun@thorntontomasetti.com", "bhiriyur@thorntontomasetti.com", "rotani@thorntontomasetti", "ssingh@thorntonTomasetti.com"];
-//             //var emails = ["SSingh@ThorntonTomasetti.com",  ] // ADMIN eMAIL
-//             // attachment str(b64data,'utf-8')
-//             const mailOptions = {
-//                 to: emails,
-//                 from: process.env.SENDGRID_EMAIL,
-//                 subject: title,
-//                 text: " ",
-//                 html: thisHTML,
-//                 "attachments": [{
-//                     "content": base64data,
-//                     "content_id": "Example Content ID",
-//                     "disposition": "attachment",
-//                     "filename": "encounters.csv",
-//                     "type": "text/csv"
-//                 }]
-
-//             };
-
-//             sendEmail(mailOptions, base64data);
-
-//             res.json(directEncounters);
-//         });
-
-
-
-
-//     function sendEmail(mailOptions, base64data) {
-//         // https://github.com/sendgrid/sendgrid-python/blob/master/USAGE.md#post-mailsend
-//         sgClient.send(mailOptions, function (err) {
-//             if (err) {
-//                 console.log("email failed", err);
-//             }
-//             console.log("sent");
-//         });
-//     }
-
-// });
-
-
-
 /**
  * @api {get} /api/encounters/get graph
  * @apiName Encounters
@@ -417,3 +316,7 @@ router.post("/get-graph", function (req, res) {
 
 
 });
+
+
+
+module.exports = router;
