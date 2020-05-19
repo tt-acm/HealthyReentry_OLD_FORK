@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
  *      User:
  *        type: object
  *        required:
+ *          - name
  *          - email
  *        properties:
  *          _id:
@@ -16,7 +17,7 @@ const mongoose = require('mongoose');
  *          name:
  *            type: String
  *            default: ""
- *            description: Neme of the user.
+ *            description: Name of the user.
  *          email:
  *            type: String
  *            default: ""
@@ -39,12 +40,6 @@ const mongoose = require('mongoose');
  *           permissions: { "admin": true, "read": true, "write": false }
  */
 const UserSchema = new mongoose.Schema({
-  // username: {
-  //   type: String,
-  //   unique: true,
-  //   required: true,
-  //   index: true
-  // },
   name: {
     type: String,
     required: true,
@@ -53,13 +48,15 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    required: true,
     unique: true,
     index: true,
     default: ""
   },
   office: {
     type: String,
-    default: ""
+    required: true,
+    default: "N/A"
   },
   dateOfConsent: Date,
   permissions: {
