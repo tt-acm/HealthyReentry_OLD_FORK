@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
  *      User:
  *        type: object
  *        required:
- *          - username
+ *          - email
  *        properties:
  *          _id:
  *            type: ObjectId
@@ -16,26 +16,27 @@ const mongoose = require('mongoose');
  *          name:
  *            type: String
  *            default: ""
+ *            description: Neme of the user.
  *          email:
  *            type: String
  *            default: ""
- *            description: Email for the user, needs to be unique.
- *          username:
+ *            description: Email of the user, needs to be unique.
+ *          office:
  *            type: String
- *            description: Username for the user, needs to be unique.
- *          bio:
- *            type: String
- *            description: A descriptive bio for the user.
+ *            description: Office name as string.
  *          permissions:
  *            type: Object
  *            description: An object representing the true/false permission values for keys.
  *                         By default contains a permission set for 'admin' set to false.
+ *          dateOfConsent:
+ *            type: Date
+ *            description: The consent date when a user signs the disclosure and consent form.
  *        example:
- *           username: pparker
  *           name: Peter Parker
  *           email: pp_is_stuck@web.com
- *           bio: My spidey sense tingles if you don't write docs.
- *           permissions: { admin: true, read: true, write: false }
+ *           office: New York
+ *           dateOfConsent: "2020-05-13T19:52:51.297Z"
+ *           permissions: { "admin": true, "read": true, "write": false }
  */
 const UserSchema = new mongoose.Schema({
   // username: {
@@ -60,13 +61,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  dateOfConsent: Date,
   permissions: {
     admin: {
       type: Boolean,
       default: false
     }
-  },
-  dateOfConsent: Date
+  }
 }, {timestamps: true});
 
 
