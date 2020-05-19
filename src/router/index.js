@@ -7,6 +7,7 @@ import Home from '@/views/Home.vue';
 import Intro from '@/views/Intro.vue';
 import Disclosure from '@/views/Disclosure.vue';
 import Menu from '@/views/Menu.vue';
+import Encounter from '@/views/Encounter.vue';
 
 // import { authGuard } from "@/auth/authGuard";
 
@@ -60,6 +61,11 @@ export default new VueRouter({
       path: '/menu',
       name: 'menu',
       component: Menu
+    },
+    {
+      path: '/encounter',
+      name: 'encounter',
+      component: Encounter
     }
   ]
 });

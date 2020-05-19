@@ -3,6 +3,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 import axios from 'axios';
+import moment from 'moment';
 
 import 'bootstrap';
 import './css/app.scss';
@@ -24,6 +25,7 @@ Vue.use(VueMaterial);
 import { Auth0Plugin } from "./auth";
 
 Vue.prototype.$api = axios.create();
+Vue.prototype.moment = moment;
 
 async function main() {
 

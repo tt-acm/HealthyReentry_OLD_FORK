@@ -1,8 +1,14 @@
 <template>
-<div id="app">
+<div class="page-container" id="app">
   <Navbar />
+  <!-- <hr /> -->
 
-  <router-view />
+  <md-content class="container">
+    <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
+    <router-view />
+  </md-content>
+
+
 
   <Footer />
 </div>
@@ -58,7 +64,11 @@ export default {
   /* text-align: center; */
 }
 
-#app {
-  height: 100vh;
+/* #app {
+  height: 100vh-80px;
+} */
+.container {
+  padding-top:70px;
 }
+
 </style>
