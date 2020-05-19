@@ -22,9 +22,9 @@ const mongoose = require('mongoose');
  *            type: String
  *            default: ""
  *            description: Email of the user, needs to be unique.
- *          office:
+ *          location:
  *            type: String
- *            description: Office name as string.
+ *            description: Location name as string.
  *          permissions:
  *            type: Object
  *            description: An object representing the true/false permission values for keys.
@@ -35,7 +35,7 @@ const mongoose = require('mongoose');
  *        example:
  *           name: Peter Parker
  *           email: pp_is_stuck@web.com
- *           office: New York
+ *           location: New York
  *           dateOfConsent: "2020-05-13T19:52:51.297Z"
  *           permissions: { "admin": true, "read": true, "write": false }
  */
@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema({
     index: true,
     default: ""
   },
-  office: {
+  location: {
     type: String,
     required: true,
     default: "N/A"

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const fs = require('fs');
-const sgClient = require("server/lib/sgClient");
+const sgClient = require("../../lib/sgClient");
 
 const User = require('../../models/User');
 

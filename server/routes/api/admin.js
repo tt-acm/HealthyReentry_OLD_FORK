@@ -39,7 +39,7 @@ router.get("/get-all-users", async function(req, res) {
     "_id": 1,
     "dateOfConsent": 1,
     "name": 1,
-    "office": 1
+    "location": 1
   }
 
   const users = await User.find({}, include).exec();
