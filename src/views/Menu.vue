@@ -7,8 +7,8 @@
         <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary text-center my-2">
           Report Your Health Status
         </button> -->
-        <md-button class="md-raised md-accent" style="width: 280px;">
-          Report Your Health Status
+        <md-button class="md-raised md-accent">
+          <h6 class="my-3">Report Your Health Status</h6>
         </md-button>
       </router-link>
     </md-list-item>
@@ -18,8 +18,8 @@
         <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary text-center my-2">
           Record a TT Encounter
         </button> -->
-        <md-button class="md-raised md-accent" style="width: 280px; margin-top: 16px">
-          Record a TT Encounter
+        <md-button class="md-raised md-accent" style="margin-top: 16px">
+          <h6 class="mb-0">Record a TT Encounter</h6>
         </md-button>
       </router-link>
     </md-list-item>
@@ -29,8 +29,8 @@
         <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary text-center my-2">
           Display QR Code
         </button> -->
-        <md-button class="md-raised md-accent" style="width: 280px; margin-top: 16px">
-          Display QR Code
+        <md-button class="md-raised md-accent" style="margin-top: 16px">
+          <h6 class="mb-0">Display QR Code</h6>
         </md-button>
       </router-link>
     </md-list-item>
@@ -50,8 +50,14 @@ export default {
     // });
     // $('#disclosure').modal('show');
     // console.log("user", this.user);
+    console.log("screen.width",screen.width);
 
-    window.$("#mainControls").css("transform", 'translateY(' + screen.height/2*0.5 + 'px)');
+    const buttonWidth = screen.width*0.7 > 280? screen.width*0.7 : 280;
+
+    console.log("buttonWidth",buttonWidth);
+
+    window.$("#mainControls").css("transform", 'translateY(' + (screen.height/2*0.5+51) + 'px)');
+    window.$("button").css("width", buttonWidth + 'px');
   },
   data() {
     return {
@@ -68,4 +74,7 @@ export default {
 </script>
 
 <style scoped>
+.md-button {
+  height: 7vh;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-toolbar class="md-primary" id="appHeader" style="background-color:rgb(52, 58, 64);">
+    <md-toolbar class="md-primary" id="appHeader">
       <a class="md-title" href="/">
         <span>Healthy Reentry</span>
         <small style="color:lightblue;margin-left:4px"><i>alpha</i></small>
@@ -46,6 +46,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#appHeader {
+  position: fixed;
+  width: 100%;
+  background-color: rgb(52, 58, 64);
+}
 </style>

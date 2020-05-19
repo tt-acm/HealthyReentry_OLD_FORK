@@ -1,14 +1,8 @@
 <template>
 <div id="app">
   <Navbar />
-  <!-- <hr /> -->
 
-  <md-content>
-    <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
-    <router-view />
-  </md-content>
-
-
+  <router-view />
 
   <Footer />
 </div>
@@ -64,7 +58,7 @@ export default {
   /* text-align: center; */
 }
 
-.md-app {
+#app {
   height: 100vh;
 }
 </style>
