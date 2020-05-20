@@ -22,7 +22,7 @@
           </md-menu-content>
         </md-menu>
       </md-badge>
-      <a v-else class="md-title md-dense" style="margin-left:auto" @click="login()" href="#!">
+      <a v-else class="md-title md-dense mr-2" style="margin-left:auto" @click="login()" href="#!">
         Login
       </a>
 

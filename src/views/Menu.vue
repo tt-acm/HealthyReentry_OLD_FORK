@@ -52,12 +52,13 @@ export default {
     // console.log("user", this.user);
     console.log("screen.width",screen.width);
 
-    const buttonWidth = screen.width*0.7 > 280? screen.width*0.7 : 280;
+    // const buttonWidth = screen.width*0.7 > 280? screen.width*0.7 : 280;
+    const buttonWidth = screen.width*0.6 > 310? screen.width*0.7 : 310;
 
     console.log("buttonWidth",buttonWidth);
 
     window.$("#mainControls").css("transform", 'translateY(' + (screen.height/6) + 'px)');
-    window.$(".menu-button").css("width", 280 + 'px');
+    window.$(".menu-button").css("width", buttonWidth + 'px');
   },
   data() {
     return {

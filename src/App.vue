@@ -3,9 +3,9 @@
   <Navbar />
   <!-- <hr /> -->
   <!-- <md-content class="mx-3" style="max-width:600px"> -->
-  <md-content class="mx-auto" style="max-width:600px">
+  <md-content class="mx-auto">
     <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
-    <router-view />
+    <router-view class="px-3" />
   </md-content>
 
 
@@ -69,7 +69,7 @@ export default {
 } */
 .md-content {
   padding-top:80px;
-  padding-bottom:20px;
+  padding-bottom:40px;
 }
 
 </style>

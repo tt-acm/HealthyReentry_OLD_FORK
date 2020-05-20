@@ -100,7 +100,7 @@
   </div> -->
   <md-list>
     <md-list-item class="py-0 mx-auto">
-      <md-button class="md-primary md-raised" @click="showDialog = true" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn">
+      <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn">
         <h6 class="mb-0">Next</h6>
       </md-button>
     </md-list-item>
@@ -114,11 +114,42 @@
       <!-- </md-button> -->
     </md-list-item>
   </md-list>
-
-  <br>
-  <br>
-
   <!-- <a class="btn btn-link" href="https://core-studio.gitbook.io/encounter/">Directions</a> -->
+
+  <md-dialog :md-active.sync="showDialog" :md-fullscreen="false">
+      <md-dialog-title>Review Your Encounter</md-dialog-title>
+      <md-subheader class="mx-2 mb-3">
+        Review the name(s) and date listed below then click <b>Submit</b>. You will not be able to edit this once submitted. To edit, click <b>Go Back</b>.
+      </md-subheader>
+      <md-content class="mx-4">
+
+        <div class="card mx-auto">
+          <div class="card-header">
+            <h6>Encounter Details<span v-if="isGroup" class="badge badge-warning ml-2">Group Encounter</span></h6>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Name(s):</b>
+              <div v-if="encountered.length>0">
+                <div v-for="encounter in encountered">
+                  <span class="mx-1">{{encounter.sso.profile.name}}</span>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item"><b>Date:</b>
+              <p class="mb-0">{{showDisplayDate(date)}}</p>
+              <!-- <p v-else> Custom Date</p> -->
+            </li>
+          </ul>
+        </div>
+      </md-content>
+
+
+
+      <md-dialog-actions class="mx-4 my-2">
+        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+        <md-button class="md-primary md-raised" @click="showDialog = false">Submit</md-button>
+      </md-dialog-actions>
+    </md-dialog>
 
 
 
@@ -219,9 +250,9 @@ export default {
 
   },
   mounted() {
-    // const buttonWidth = screen.width*0.7 > 280? screen.width*0.7 : 280;
+    const buttonWidth = screen.width*0.6 > 250? screen.width*0.7 : 250;
 
-    window.$("#nextBtn").css("width", 280 + 'px');
+    window.$("#nextBtn").css("width", buttonWidth + 'px');
     // console.log("this.direct", this.$browserDetect.isChromeIOS);
     // console.log("this route param", this.$route.params);
   },
@@ -416,4 +447,9 @@ export default {
   padding-top: 0px;
   padding-bottom: 0px;
 } */
+.md-dialog /deep/ .md-dialog-container {
+  transform: none;
+}
+
+
 </style>
