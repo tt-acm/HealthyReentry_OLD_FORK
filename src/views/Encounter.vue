@@ -8,13 +8,14 @@
       <p class="mb-2">
         Search for colleagues by typing their name(s) or scanning their QR code.
       </p>
-      <p class="mb-2">
-        Log ALL interactions with TT colleagues where you are:
-        <ol class="pl-3 my-2">
-          <li>Standing/sitting/walking less than six feet (two meters) apart, <b>AND</b></li>
-          <li>Not wearing a mask.</li>
-        </ol>
-      </p>
+      <div class="d-flex mb-2 mx-0 align-items-center">
+        <p class="mb-0">
+          Log ALL encounters with TT colleagues where there is a breach of our current protocol.
+        </p>
+        <a class="ml-1" href="https://spark.thorntontomasetti.com/people/DStauthamer@ThorntonTomasetti.com/blog/2020/05/14/reentry-protocols-and-toolkit" target="blank">
+          <md-icon class="md-size-1x m-0" md-src="/assets/imgs/info-circle-solid-small.svg" style="color:white"></md-icon>
+        </a>
+      </div>
       <p class="mb-0">
         For a group interaction, check the <i>Group</i> box (only one person needs to submit to account for everyone in the group).
       </p>
