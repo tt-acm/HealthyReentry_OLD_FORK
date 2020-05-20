@@ -6,13 +6,13 @@ Healthy Reentry is a web app to track in-person encounters within an organizatio
 **Home Page**  
 ![Healthy Reentry Home Page](./docs/imgs/screensots_homepage.png)
 
-**Encounter Screen**
+**Encounter Screen**  
 ![Healthy Reentry Encounter Screen](./docs/imgs/screensots_encounter.png)
 
-**QR Code Screen**
+**QR Code Screen**  
 ![Healthy Reentry QR Code Screen](./docs/imgs/screensots_qrcode.png)
 
-**Admin Screen**
+**Admin Screen**  
 ![Healthy Reentry Admin Screen](./docs/imgs/screensots_admin.png)
 
 ## Quickstart
@@ -32,7 +32,8 @@ Check out the [detailed development guide](./docs/dev-details.md) to learn more.
 ???
 
 ## Contributions
-???
+Are you interested in enhance this product? We're really glad and thanks a lot!  
+Open up an issue to discuss.  
 
 ## External Services
 
