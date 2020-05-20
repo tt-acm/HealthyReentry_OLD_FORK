@@ -55,7 +55,6 @@ export default new VueRouter({
       path: '/',
       name: 'home',
       component: Intro,
-      beforeEnter: authGuard,
       meta: {
         title: route => "Healthy Reentry: Welcome"
       },
@@ -76,11 +75,7 @@ export default new VueRouter({
       path: '/menu',
       name: 'menu',
       component: Menu,
-      // beforeEnter: (to, from, next) => {
-      //   if (!store.state.user) return next('/home');
-      //   else if (!store.state.user.dateOfConsent) return next('/disclosure');
-      //   else return next();
-      // },
+      beforeEnter: authGuard,
       meta: {
         title: route => "Healthy Reentry: Menu"
       },

@@ -150,14 +150,16 @@ router.post('/', async (req, res) => {
   if (!u || u === {}) {
     return res.status(400).send();
   }
-  let user = await User.findOne({ username: u.nickname });
+  let user = await User.findOne({ email: String(u.email) });
   if (user) {
     return res.json(user);
   }
+
   user = new User({
-    username: u.nickname,
+    // username: u.nickname,
     name: u.name,
-    email: u.email
+    email: u.email,
+    picture: u.picture
   });
   user = await user.save();
   return res.json(user);

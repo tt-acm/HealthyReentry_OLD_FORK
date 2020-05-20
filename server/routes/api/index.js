@@ -37,8 +37,9 @@ const errHandler = async function (err, req, res, next) {
 
 
 const addUserToReq = async function(req, res, next) {
-  let username = req.headers.username;
-  let user = await User.findOne({username: username});
+  // console.log("adding user to req", req.headers);
+  let userEmail = req.headers.email;
+  let user = await User.findOne({email: userEmail});
   if (user) {
     req.user = user;
   }
