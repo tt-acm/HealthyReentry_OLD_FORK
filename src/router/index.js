@@ -13,6 +13,8 @@ import DisplayQR from '@/views/DisplayQR.vue';
 import Admin from '@/views/Admin.vue';
 import NotFound from '@/views/404.vue';
 
+import store from '@/store/index.js';
+
 import { authGuard } from "@/auth/authGuard";
 
 Vue.use(VueRouter);
@@ -75,7 +77,13 @@ export default new VueRouter({
       path: '/menu',
       name: 'menu',
       component: Menu,
-      beforeEnter: authGuard,
+      // beforeEnter: authGuard,
+      beforeEnter: (to, from, next) => {
+        console.log("this", store.state);
+        // if (!store.state.user) return next('/home');
+        // else if (store.state.user.dateOfConsent) return next('/menu');
+        // else return next();
+      },
       meta: {
         title: route => "Healthy Reentry: Menu"
       },

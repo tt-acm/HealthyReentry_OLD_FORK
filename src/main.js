@@ -30,6 +30,25 @@ import { Auth0Plugin } from "./auth";
 Vue.prototype.$api = axios.create();
 Vue.prototype.moment = moment;
 
+router.beforeEach((to, from, next) => {
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title(to);
+  }
+  // next();
+  console.log("coming here");
+  $.get("/session").then(session => {
+    console.log("session", session);
+    store.commit('setUser', session.user);
+    // console.log("set user");
+    // keepGoing();
+    next();
+  }).catch(() => {
+    store.commit('setUser', null);
+    // keepGoing();
+    next();
+  })
+})
+
 async function main() {
 
   let resp = await Vue.prototype.$api.get('/api/auth0-secrets');
