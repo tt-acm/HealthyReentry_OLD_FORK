@@ -3,7 +3,7 @@
   <Navbar />
   <!-- <hr /> -->
   <!-- <md-content class="mx-3" style="max-width:600px"> -->
-  <md-content class="mx-auto">
+  <md-content class="mx-auto" style="padding-top:75px;padding-bottom:40px;">
     <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
     <router-view class="px-3" />
   </md-content>
@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #appFooter {
   position: fixed;
   left: 0;
@@ -67,9 +67,8 @@ export default {
 /* #app {
   height: 100vh-80px;
 } */
-.md-content {
-  padding-top:80px;
-  padding-bottom:40px;
+.md-dialog /deep/ .md-dialog-container {
+  transform: none;
 }
 
 </style>

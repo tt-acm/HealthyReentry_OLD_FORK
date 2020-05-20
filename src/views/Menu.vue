@@ -25,7 +25,7 @@
     </md-list-item>
 
     <md-list-item  class="mx-auto">
-      <router-link :to="{ name: 'QRCode', params: { id: user._id}}">
+      <router-link :to="{ name: 'displayqr', params: { id: user._id}}">
         <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary text-center my-2">
           Display QR Code
         </button> -->

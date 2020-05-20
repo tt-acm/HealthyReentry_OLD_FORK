@@ -8,6 +8,8 @@ import Intro from '@/views/Intro.vue';
 import Disclosure from '@/views/Disclosure.vue';
 import Menu from '@/views/Menu.vue';
 import Encounter from '@/views/Encounter.vue';
+import Status from '@/views/Status.vue';
+import DisplayQR from '@/views/DisplayQR.vue';
 
 // import { authGuard } from "@/auth/authGuard";
 
@@ -66,6 +68,16 @@ export default new VueRouter({
       path: '/encounter',
       name: 'encounter',
       component: Encounter
+    },
+    {
+      path: '/status',
+      name: 'status',
+      component: Status
+    },
+    {
+      path: '/displayqr',
+      name: 'displayqr',
+      component: DisplayQR
     }
   ]
 });

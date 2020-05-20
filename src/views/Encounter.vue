@@ -28,11 +28,12 @@
     </div>
   </div>
 
-  <b class="mt-3 mb-1 d-flex">Your Encounter(s):
+  <div class="d-flex align-items-end">
+    <b class="mt-3 mb-0">Your Encounter(s):</b>
     <a class="ml-1" href="https://core-studio.gitbook.io/encounter/faq#what-counts-as-an-interaction-that-should-be-logged" target="blank">
-      <md-icon class="md-size-1x m-0" md-src="/assets/imgs/info-circle-solid-small.svg" ></md-icon>
+      <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" ></md-icon>
     </a>
-  </b>
+  </div>
 
   <div class="input-group mb-2 d-flex justify-content-between">
     <div class="mt-1 ml-0 mr-2" style="min-width:18rem;">
@@ -57,12 +58,15 @@
   <div class="form-check mt-2">
     <input v-if="encountered.length > 1" class="form-check-input" type="checkbox" v-model="isGroup" id="defaultCheck1">
     <input v-else class="form-check-input" type="checkbox" v-model="isGroup" id="defaultCheck1" disabled>
-    <label class="form-check-label d-flex" for="defaultCheck1">
-      Group
-      <a class="mb-2 ml-1" href="https://core-studio.gitbook.io/encounter/faq#when-should-i-use-the-group-checkbox" target="blank">
-        <md-icon class="md-size-1x m-0" md-src="/assets/imgs/info-circle-solid-small.svg" ></md-icon>
-      </a>
-    </label>
+    <div class="d-flex align-items-end">
+      <label class="form-check-label d-flex" for="defaultCheck1">
+        Group
+        <a class="mb-0 ml-1" href="https://core-studio.gitbook.io/encounter/faq#when-should-i-use-the-group-checkbox" target="blank">
+          <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" ></md-icon>
+        </a>
+      </label>
+    </div>
+
   </div>
   <qrcode-stream v-if="camera!=='off'" @decode="onDecode" :camera="camera"></qrcode-stream>
 
@@ -81,45 +85,32 @@
           Pick a Date
         </label>
         <p v-if="!todaySelected" class="text-muted">{{showDisplayDate(date)}}</p>
-        <!-- <md-datepicker v-if="!todaySelected" v-model="date"> -->
-
-        <!-- </md-datepicker> -->
-        <!-- <vuejs-datepicker v-if="showDatePicker" v-model="date" :format="'MMM dd yyyy'" :inline="true" class="mb-4"></vuejs-datepicker> -->
+        <vuejs-datepicker v-if="showDatePicker" v-model="date" :format="'MMM dd yyyy'" :inline="true" class="mb-4"></vuejs-datepicker>
       </div>
     </div>
   </div>
 
   <br>
-  <!-- Button trigger modal -->
-  <!-- <button v-if="!disableSubmitDate && !disableSubmitUser" type="button" class="btn btn-primary btn-lg btn-block text-white pl-0 pr-2" data-toggle="modal" data-target="#exampleModalLong">
-    Next
-  </button>
-  <div v-else class="btn btn-lg btn-block text-white" style="backgroundColor:#b8b8b8">
-    <md-tooltip md-direction="top" class="bg-danger">Cannot click Next; enter a name above.</md-tooltip>
-    Next (disabled)
-  </div> -->
   <md-list>
     <md-list-item class="py-0 mx-auto">
-      <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn">
+      <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn" style="width:240px">
         <h6 class="mb-0">Next</h6>
       </md-button>
     </md-list-item>
 
-    <!-- <div class="text-center mt-1 btn btn-lg btn-block">
-      <router-link :to="{ name: 'menu' }"> Back </router-link>
-    </div> -->
     <md-list-item class="mx-auto py-0">
-      <!-- <md-button class="md-primary mx-auto"> -->
-        <router-link :to="{ name: 'menu' }"> Back </router-link>
-      <!-- </md-button> -->
+      <md-button class="md-primary mx-auto">
+        <router-link :to="{ name: 'menu' }"> <p class="text-muted">Back</p> </router-link>
+      </md-button>
     </md-list-item>
   </md-list>
-  <!-- <a class="btn btn-link" href="https://core-studio.gitbook.io/encounter/">Directions</a> -->
 
+
+  <!-- Modal -->
   <md-dialog :md-active.sync="showDialog" :md-fullscreen="false">
       <md-dialog-title>Review Your Encounter</md-dialog-title>
       <md-subheader class="mx-2 mb-3">
-        Review the name(s) and date listed below then click <b>Submit</b>. You will not be able to edit this once submitted. To edit, click <b>Go Back</b>.
+        Review the name(s) and date listed below then click <b class="ml-1">Submit</b>. You will not be able to edit this once submitted. To edit, click <b class="ml-1">Go Back</b>.
       </md-subheader>
       <md-content class="mx-4">
 
@@ -154,54 +145,10 @@
 
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reviewTitle">Review Your Encounter</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>
-            Review the name(s) and date listed below then click <b>Submit</b>. You will not be able to edit this once submitted. To edit, click <b>Go Back</b>.
-          </p>
-
-          <div class="card mx-auto" style="width: 20rem;">
-            <div class="card-header">
-              <h6>Encounter Details<span v-if="isGroup" class="badge badge-warning ml-2">Group Encounter</span></h6>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><b>Name(s):</b>
-                <div v-if="encountered.length>0">
-                  <div v-for="encounter in encountered">
-                    <span class="mx-1">{{encounter.sso.profile.name}}</span>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item"><b>Date:</b>
-                <p>{{showDisplayDate(date)}}</p>
-                <!-- <p v-else> Custom Date</p> -->
-              </li>
-            </ul>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-dismiss="modal">Go Back</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveEncounters()">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
 </div>
 </template>
-<!-- <script src="https://unpkg.com/vuejs-datepicker"></script> -->
-<!-- <script src="./vue-browser-detect-plugin.umd.js"></script> -->
+<script src="./vue-browser-detect-plugin.umd.js"></script>
 
 <script>
 // import autocomplete from "components/autoComplete.vue";
@@ -209,7 +156,7 @@ import {
   QrcodeStream
 } from 'vue-qrcode-reader'
 // import appAlerts from "components/appAlerts.vue";
-// import Datepicker from '../../../../node_modules/vuejs-datepicker/dist/vuejs-datepicker';
+import vuejsDatepicker from 'vuejs-datepicker';
 
 // app Alert
 // https://github.com/tt-acm/CORE.Bootstrap.jspkg/blob/958451080ef1115c1dc07bb2851882dcfad8628f/src/bootstrap/css/lib/bootstrap4/_alert.scss
@@ -221,7 +168,7 @@ export default {
   name: "encounter",
   components: {
     // autocomplete,
-    // vuejsDatepicker,
+    vuejsDatepicker,
     QrcodeStream
     // appAlerts
   },
@@ -250,9 +197,9 @@ export default {
 
   },
   mounted() {
-    const buttonWidth = screen.width*0.6 > 250? screen.width*0.7 : 250;
+    const buttonWidth = screen.width*0.6 > 280? screen.width*0.7 : 280;
 
-    window.$("#nextBtn").css("width", buttonWidth + 'px');
+    // window.$("#nextBtn").css("width", buttonWidth + 'px');
     // console.log("this.direct", this.$browserDetect.isChromeIOS);
     // console.log("this route param", this.$route.params);
   },
@@ -271,7 +218,7 @@ export default {
       camera: 'off',
       encountersToday: null,
       isGroup: false,
-      // showDatePicker: false,
+      showDatePicker: false,
       frequentEncounters: null,
       showDialog: false
     };
@@ -447,9 +394,9 @@ export default {
   padding-top: 0px;
   padding-bottom: 0px;
 } */
-.md-dialog /deep/ .md-dialog-container {
+/* .md-dialog /deep/ .md-dialog-container {
   transform: none;
-}
+} */
 
 
 </style>
