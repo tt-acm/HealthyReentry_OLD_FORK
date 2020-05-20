@@ -124,4 +124,50 @@ router.get("/get-all", function (req, res) {
 });
 
 
+/**
+ * @swagger
+ * path:
+ *  /api/users/:
+ *    post:
+ *      summary: Create a new user. Returns existing user of same name if found.
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User'
+ *      responses:
+ *        "200":
+ *          description: Stored user entry.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/User'
+ */
+router.post('/', async (req, res) => {
+  const u = req.body;
+  if (!u || u === {}) {
+    return res.status(400).send();
+  }
+  let user = await User.findOne({ username: u.nickname });
+  if (user) {
+    return res.json(user);
+  }
+  user = new User({
+    username: u.nickname,
+    name: u.name,
+    email: u.email
+  });
+  user = await user.save();
+  return res.json(user);
+
+});
+
+
+router.get('/test', function(req, res) {
+  console.log('Test user route');
+  return res.send('Test user route');
+});
+
 module.exports = router;
