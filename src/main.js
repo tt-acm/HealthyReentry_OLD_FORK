@@ -1,8 +1,12 @@
 import Vue from 'vue';
 import App from '@/App.vue';
+import axios from 'axios';
+Vue.prototype.$api = axios.create();
+
+import { Auth0Plugin } from "./auth";
 import router from '@/router';
 import store from '@/store';
-import axios from 'axios';
+
 import moment from 'moment';
 import VueQrcodeReader from "vue-qrcode-reader";
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -25,10 +29,9 @@ Vue.use(VueMaterial);
 // Vue.use(MdButton)
 // Vue.use(MdContent)
 // Vue.use(MdTabs)
-import { Auth0Plugin } from "./auth";
 
-Vue.prototype.$api = axios.create();
 Vue.prototype.moment = moment;
+
 
 async function main() {
 

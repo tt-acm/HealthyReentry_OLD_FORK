@@ -3,7 +3,7 @@
     <md-toolbar class="md-primary" id="appHeader">
       <a class="md-title" href="/">
         <span>Healthy Reentry</span>
-        <small style="color:lightblue;margin-left:4px"><i>alpha</i></small>
+        <small style="color:lightblue;margin-left:4px"><i>beta</i></small>
       </a>
 
       <md-badge v-if="$auth.isAuthenticated && $auth.userDB" class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">

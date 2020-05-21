@@ -209,17 +209,16 @@
 </template>
 <script>
 // import store from "store/index.js";
+import Vuex from 'vuex';
+
 var tabIds = ["tab-green", "tab-orange", "tab-red", "tab-blue"]
 export default {
-  // props: ["user"],
   created() {
-    if (this.$auth.userDB) this.user = this.$auth.userDB;
+    console.log("this.user in status", this.user);
 
     this.$api.get("/api/status/get-current").then(returnedStatus => {
       var curStatus = returnedStatus.data;
-      console.log("curStatus", curStatus);
       if (curStatus) {
-        console.log("status exists");
         this.latestStatus = curStatus;
 
         if (curStatus.status !== null) {
@@ -261,7 +260,6 @@ export default {
   },
   data() {
     return {
-      user: null,
       showDialog: false,
       submitSuccess: false,
       notificationDuration: 4000,
@@ -301,9 +299,9 @@ export default {
       }
     }
   },
-  // computed: Vuex.mapState({
-  //   user: state => state.user,
-  // }),
+  computed: Vuex.mapState({
+    user: state => state.user,
+  }),
   methods: {
     showDisplayDate(date) {
       return this.moment(date).format('ll');

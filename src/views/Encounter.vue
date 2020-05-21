@@ -152,6 +152,7 @@
 <script src="./vue-browser-detect-plugin.umd.js"></script>
 
 <script>
+import Vuex from 'vuex';
 import autocomplete from "@/components/autoComplete.vue";
 import {
   QrcodeStream
@@ -184,20 +185,16 @@ export default {
         }, {})
 
       const dictionary = arrayToObject(all);
-      this.userDictionary = dictionary;
-      this.minUsers = Object.keys(dictionary);
-      // Vue.set(this, "userDictionary", dictionary);
-      // Vue.set(this, "minUsers", Object.keys(dictionary));
+      Vue.set(this, "userDictionary", dictionary);
+      Vue.set(this, "minUsers", Object.keys(dictionary));
     });
 
     this.$api.get("/api/encounters/find-frequent-encounters").then(mostEncountered => {
-      // this.frequentEncounters = mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email);
-
       const userToday = mostEncountered.filter(u=>u.encounteredToday===true);
       console.log("userToday", userToday);
       this.encountersToday = userToday;
-      // Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
-      // Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
+      Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
+      Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
 
       if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
     });
@@ -246,9 +243,9 @@ export default {
       }
     }
   },
-  // computed: Vuex.mapState({
-  //   user: state => state.user,
-  // }),
+  computed: Vuex.mapState({
+    user: state => state.user,
+  }),
   methods: {
     preLaunchCamera() {
       if (this.$browserDetect.isChromeIOS) {

@@ -13,6 +13,8 @@ import DisplayQR from '@/views/DisplayQR.vue';
 import Admin from '@/views/Admin.vue';
 import NotFound from '@/views/404.vue';
 
+import store from '@/store/index.js';
+
 import { authGuard } from "@/auth/authGuard";
 
 Vue.use(VueRouter);
@@ -88,6 +90,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Record Your Encounter"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -97,6 +100,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Record Your Status"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -106,6 +110,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: View Your QR Code"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -115,6 +120,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Admin View"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {

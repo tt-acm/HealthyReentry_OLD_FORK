@@ -1,5 +1,6 @@
 import Vue from "vue";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import store from '@/store/index.js';
 
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK = async () => {
@@ -140,8 +141,10 @@ export const useAuth0 = ({
           await this.updateStateVars();
 
           if (this.isAuthenticated) {
-            await this.$api.post('/api/users', this.user).then(returnedUser => {
+            await this.$api.post('/api/user', this.user).then(returnedUser => {
               this.userDB = returnedUser.data;
+              store.commit('setUser', this.userDB);
+              console.log("STOREUSER", store.state.user);
             });
           }
 
