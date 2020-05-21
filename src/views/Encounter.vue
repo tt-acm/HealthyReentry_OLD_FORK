@@ -184,13 +184,20 @@ export default {
         }, {})
 
       const dictionary = arrayToObject(all);
-      Vue.set(this, "userDictionary", dictionary);
-      Vue.set(this, "minUsers", Object.keys(dictionary));
+      this.userDictionary = dictionary;
+      this.minUsers = Object.keys(dictionary);
+      // Vue.set(this, "userDictionary", dictionary);
+      // Vue.set(this, "minUsers", Object.keys(dictionary));
     });
 
     this.$api.get("/api/encounters/find-frequent-encounters").then(mostEncountered => {
-      Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
-      Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
+      // this.frequentEncounters = mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email);
+
+      const userToday = mostEncountered.filter(u=>u.encounteredToday===true);
+      console.log("userToday", userToday);
+      this.encountersToday = userToday;
+      // Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
+      // Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
 
       if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
     });
@@ -220,7 +227,7 @@ export default {
       encountersToday: null,
       isGroup: false,
       showDatePicker: false,
-      frequentEncounters: null,
+      // frequentEncounters: null,
       showDialog: false
     };
   },
