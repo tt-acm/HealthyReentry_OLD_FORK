@@ -53,6 +53,9 @@ const UserSchema = new mongoose.Schema({
     index: true,
     default: ""
   },
+  picture: {
+    type: String
+  },
   location: {
     type: String,
     required: true,

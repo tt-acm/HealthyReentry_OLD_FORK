@@ -26,6 +26,7 @@ export const useAuth0 = ({
         loading: true,
         isAuthenticated: false,
         user: {},
+        userDB: null,
         token: null,
         jwt: null,
         auth0Client: null,
@@ -135,7 +136,9 @@ export const useAuth0 = ({
           await this.updateStateVars();
 
           if (this.isAuthenticated) {
-            await this.$api.post('/api/users', this.user);
+            await this.$api.post('/api/users', this.user).then(returnedUser => {
+              this.userDB = returnedUser.data;
+            });
           }
 
           // Notify subscribers that the redirect callback has happened, passing the appState
