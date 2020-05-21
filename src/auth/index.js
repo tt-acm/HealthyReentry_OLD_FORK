@@ -141,7 +141,7 @@ export const useAuth0 = ({
           await this.updateStateVars();
 
           if (this.isAuthenticated) {
-            await this.$api.post('/api/users', this.user).then(returnedUser => {
+            await this.$api.post('/api/user', this.user).then(returnedUser => {
               this.userDB = returnedUser.data;
               store.commit('setUser', this.userDB);
               console.log("STOREUSER", store.state.user);

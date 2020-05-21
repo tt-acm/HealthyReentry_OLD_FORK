@@ -128,7 +128,7 @@ router.get("/get-all", function (req, res) {
 /**
  * @swagger
  * path:
- *  /api/users/:
+ *  /api/user/:
  *    post:
  *      summary: Create a new user. Returns existing user of same name if found.
  *      tags: [Users]
