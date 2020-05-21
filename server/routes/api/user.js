@@ -103,6 +103,7 @@ router.get("/consent-signed", function (req, res) {
 
 //get all users
 router.get("/get-all", function (req, res) {
+  console.log("coming here", req.user);
 
   // returns only email, profile name, and _id
   let include = {

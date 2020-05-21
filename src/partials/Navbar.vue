@@ -17,6 +17,11 @@
 
           <md-menu-content>
             <md-menu-item disabled>{{$auth.userDB.name}}</md-menu-item>
+            <md-menu-item>
+              <router-link :to="{ name: 'admin' }">
+                Admin View
+              </router-link>
+            </md-menu-item>
             <md-menu-item>Profile</md-menu-item>
             <md-menu-item @click="logout()">Log out</md-menu-item>
           </md-menu-content>

@@ -3,14 +3,21 @@
   <Navbar />
   <!-- <hr /> -->
   <!-- <md-content class="mx-3" style="max-width:600px"> -->
+  <span v-model="notificationMsg"></span>
   <md-content class="mx-auto" style="padding-top:75px;padding-bottom:40px;">
     <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
-    <router-view class="px-3" />
+    <router-view class="px-3" @getNotification="showNotification"/>
   </md-content>
 
 
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showMsg" md-persistent>
+    <span> Status successfully recorded.</span>
+    <!-- <md-button class="md-icon-button" @click="showMsg = false">
+      <md-icon class="fas fa-times"></md-icon>
+    </md-button> -->
+  </md-snackbar>
 
-  <Footer />
+  <!-- <Footer /> -->
 </div>
 </template>
 
@@ -25,7 +32,11 @@ export default {
     Footer
   },
   data() {
-    return {};
+    return {
+      notificationDuration: 4000,
+      showMsg: false,
+      notificationMsg: "nothing"
+    };
   },
   mounted() {
     // $.get("https://s3-us-west-2.amazonaws.com/core-weblibrary/libraries/core-logo.svg.html", function(data) {
@@ -47,6 +58,16 @@ export default {
       this.$auth.logout({
         returnTo: window.location.origin
       });
+    },
+    showNotification: function(alerts) {
+      console.log("got alert", alerts);
+      // this.notificationDuration = alerts.duration;
+      // this.notificationMsg = this.message;
+      this.showMsg = true;
+      // this.alerts = alerts;
+      // setTimeout(() => {
+      //   this.showMsg = false;
+      // }, this.notificationDuration);
     }
   }
 }

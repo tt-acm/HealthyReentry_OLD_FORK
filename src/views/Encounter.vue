@@ -13,7 +13,7 @@
           Log ALL encounters with TT colleagues where there is a breach of our current protocol.
         </p>
         <a class="ml-1" href="https://spark.thorntontomasetti.com/people/DStauthamer@ThorntonTomasetti.com/blog/2020/05/14/reentry-protocols-and-toolkit" target="blank">
-          <md-icon class="md-size-1x m-0" md-src="/assets/imgs/info-circle-solid-small.svg" style="color:white"></md-icon>
+          <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" style="color:white"></md-icon>
         </a>
       </div>
       <p class="mb-0">
@@ -38,8 +38,8 @@
 
   <div class="input-group mb-2 d-flex justify-content-between">
     <div class="mt-1 ml-0 mr-2" style="min-width:18rem;">
-      <!-- <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete> -->
-      <!-- <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p> -->
+      <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete>
+      <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p>
     </div>
     <div class="mt-2 ml-2 mr-auto">
       <md-tooltip md-direction="top">Open camera to scan QR code</md-tooltip>
@@ -152,7 +152,7 @@
 <script src="./vue-browser-detect-plugin.umd.js"></script>
 
 <script>
-// import autocomplete from "components/autoComplete.vue";
+import autocomplete from "@/components/autoComplete.vue";
 import {
   QrcodeStream
 } from 'vue-qrcode-reader'
@@ -168,32 +168,32 @@ import vuejsDatepicker from 'vuejs-datepicker';
 export default {
   name: "encounter",
   components: {
-    // autocomplete,
+    autocomplete,
     vuejsDatepicker,
     QrcodeStream
     // appAlerts
   },
   created() {},
   beforeMount() {
-    // $.get("/api/user/get-all").then(all => {
-    //
-    //   const arrayToObject = (array) =>
-    //     array.reduce((obj, item) => {
-    //       obj[item.sso.profile.name + "_" + item.sso.email] = item
-    //       return obj
-    //     }, {})
-    //
-    //   const dictionary = arrayToObject(all);
-    //   Vue.set(this, "userDictionary", dictionary);
-    //   Vue.set(this, "minUsers", Object.keys(dictionary));
-    // });
-    //
-    // $.get("/api/encounters/find-frequent-encounters").then(mostEncountered => {
-    //   Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
-    //   Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
-    //
-    //   if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
-    // });
+    this.$api.get("/api/user/get-all").then(all => {
+
+      const arrayToObject = (array) =>
+        array.reduce((obj, item) => {
+          obj[item.sso.profile.name + "_" + item.sso.email] = item
+          return obj
+        }, {})
+
+      const dictionary = arrayToObject(all);
+      Vue.set(this, "userDictionary", dictionary);
+      Vue.set(this, "minUsers", Object.keys(dictionary));
+    });
+
+    this.$api.get("/api/encounters/find-frequent-encounters").then(mostEncountered => {
+      Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
+      Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
+
+      if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
+    });
 
 
   },
@@ -245,7 +245,7 @@ export default {
   methods: {
     preLaunchCamera() {
       if (this.$browserDetect.isChromeIOS) {
-        this.$emit("getNotification", [{
+        this.$api.$emit("getNotification", [{
           message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
           type: "warning"
         }]);
@@ -267,7 +267,7 @@ export default {
         var body = {
           "email": emailStr
         }
-        $.post("/api/user/user-by-email", body).then(res => {
+        this.$api.post("/api/user/user-by-email", body).then(res => {
           const encountered = this.encountered.map(en=>en._id);
 
           if (res && res.sso) {
@@ -360,7 +360,7 @@ export default {
         isGroup: this.isGroup
       };
       //console.log(body);
-      $.post("/api/encounters/add-many", body).then(result => {
+      this.$api.post("/api/encounters/add-many", body).then(result => {
         // console.log("result", result);
         if (result) {
           this.$emit("getNotification", [{

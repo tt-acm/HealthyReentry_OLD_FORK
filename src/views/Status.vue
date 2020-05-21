@@ -204,12 +204,6 @@
   </md-dialog>
 
   <!-- notifications -->
-  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="submitSuccess" md-persistent>
-    <span>Status successfully recorded.</span>
-    <md-button class="md-icon-button" @click="submitSuccess = false">
-      <md-icon class="fas fa-times"></md-icon>
-    </md-button>
-  </md-snackbar>
 
 </div>
 </template>
@@ -341,10 +335,9 @@ export default {
       this.$api.post("/api/status/report", body).then(savedStatus => {
         console.log("status Saved", savedStatus);
         this.latestStatus = savedStatus;
-        // window.alert("Status are successfully reported!")
 
         if (savedStatus) {
-          this.submitSuccess = true;
+          this.$emit("getNotification");
 
           this.$router.push({
             name: 'menu'

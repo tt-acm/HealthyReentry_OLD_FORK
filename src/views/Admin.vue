@@ -441,7 +441,7 @@ export default {
       let officesSet = new Set();
 
       let apiurl = `/api/admin/get-all-users`;
-      $.get(apiurl)
+      this.$api.get(apiurl)
         .then(users => {
           users.sort((a, b) => (a.sso.profile.name < b.sso.profile.name) ? -1 : 1)
           that.users = users;
@@ -464,7 +464,7 @@ export default {
 
       let that = this;
 
-      $.post("/api/admin/update-users", this.userUpdateData)
+      this.$api.post("/api/admin/update-users", this.userUpdateData)
         .then(updatedUsers => {
 
           updatedUsers.forEach(nu => {
