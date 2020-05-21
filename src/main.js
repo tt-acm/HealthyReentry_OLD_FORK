@@ -35,10 +35,11 @@ Vue.use(VueMaterial);
 Vue.prototype.moment = moment;
 
 router.beforeEach((to, from, next) => {
+  console.log("to", to)
   if (to.meta && to.meta.title) {
     document.title = to.meta.title(to);
   }
-  // // next();
+  next();
   // console.log("coming here");
   // $.get("/session").then(session => {
   //   console.log("session", session);
