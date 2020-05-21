@@ -5,12 +5,12 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    gotSession: false,
+    // gotSession: false,
     user: null
   },
   mutations: {
     setUser(state, user) {
-      state.gotSession = true;
+      // state.gotSession = true;
       state.user = user;
 
       // if (user) {
