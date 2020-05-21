@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const variables = require("../util/variables");
 
 /**
  * @swagger
@@ -69,6 +69,14 @@ const UserSchema = new mongoose.Schema({
     }
   }
 }, {timestamps: true});
+
+UserSchema.pre("save", function (next) {
+    var user = this;
+    // set admin
+    if(variables.ADMIN_USERS.includes(user.email)) user.permissions.admin= true;
+    next();
+
+});
 
 
 module.exports = mongoose.model('User', UserSchema);

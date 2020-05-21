@@ -22,7 +22,7 @@
                 Admin View
               </router-link>
             </md-menu-item>
-            <md-menu-item>Profile</md-menu-item>
+            <!-- <md-menu-item>Profile</md-menu-item> -->
             <md-menu-item @click="logout()">Log out</md-menu-item>
           </md-menu-content>
         </md-menu>
