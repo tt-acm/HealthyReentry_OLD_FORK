@@ -75,7 +75,11 @@ router.post("/add-one", function (req, res) {
 router.post("/add-many", function (req, res) {
 
     return new Promise(function (resolve, reject) {
-        var numEncounters = req.body.ids.length;
+        let ids = req.body.encounters.reduce(function (out, x) {
+            out.push(x._id);
+            return out;
+        }, []);
+        var numEncounters = ids.length;
         if (req.body.isGroup === "true") numEncounters = combinations(numEncounters + 1, 2);
 
         var encounters = [];
@@ -107,7 +111,7 @@ router.post("/add-many", function (req, res) {
         } else {
 
             // this add enounters with the sender user only
-            req.body.ids.forEach(function (id) {
+            ids.forEach(function (id) {
 
                 var e = new Encounter({
                     users: []
@@ -175,7 +179,7 @@ router.post("/add-many", function (req, res) {
  * @apiDescription finds frequent encounters
  * @apiGroup encounters
  *
- * @apiSuccess {Object[]} encounters { -id, sso.email, sso.profile.name, encounteredToday};
+ * @apiSuccess {Object[]} encounters { -id, email, name, encounteredToday};
  * @apiError 500 Internal Server Error
  *
  */
@@ -259,12 +263,12 @@ router.post("/get-graph", function (req, res) {
         // Admin List to Change
         var title = "Encounter Alert - ALPHA TESTING";
         var thisHTML = "<div><p><strong>Attention:</strong><br><br>" + req.user.name + " reported their COVID_19 status as <i>" + req.body.status + ".</i><br><br>Attached are all of the employee’s encounters that have occurred within the last 14 days.</p></div>";
-        
+
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        
+
         var newdate = month + "/" + day + "/"+ year;
         var fileName = req.user.name + "-" + req.body.status + "-"+ newdate + ".csv";
         const mailOptions = {

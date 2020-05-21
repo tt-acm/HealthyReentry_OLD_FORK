@@ -402,12 +402,12 @@ export default {
       let officeArr = this.officesList
                             .filter(o => o.selected)
                             .map(o => o.LocationName);
-      let officeFilteredUsers = this.users.filter(u => officeArr.includes(u.sso.profile.location));
+      let officeFilteredUsers = this.users.filter(u => officeArr.includes(u.location));
 
       let nameFilteredUsers = officeFilteredUsers;
       if(this.nameFilter !== "") {
         let nfLower = this.nameFilter.toLowerCase();
-        nameFilteredUsers = nameFilteredUsers.filter(u => u.sso.profile.name.toLowerCase().includes(nfLower));
+        nameFilteredUsers = nameFilteredUsers.filter(u => u.name.toLowerCase().includes(nfLower));
       };
 
       let st = (this.itemsOnPage * (this.pageNo - 1));
@@ -422,8 +422,8 @@ export default {
         let user = {
           id: u._id,
           selected: false,
-          name: u.sso.profile.name,
-          officeCode: u.sso.profile.location,
+          name: u.name,
+          officeCode: u.location,
           status: status,
           statusCode: status.code,
           lastUpdatedFormatted: updateDate,
@@ -443,10 +443,10 @@ export default {
       let apiurl = `/api/admin/get-all-users`;
       this.$api.get(apiurl)
         .then(users => {
-          users.sort((a, b) => (a.sso.profile.name < b.sso.profile.name) ? -1 : 1)
+          users.sort((a, b) => (a.name < b.name) ? -1 : 1)
           that.users = users;
           that.users.forEach(u => {
-            let loc = u.sso.profile.location || 'unknown';
+            let loc = u.location || 'unknown';
             officesSet.add(loc);
           });
           this.officesList = Array.from(officesSet).map(o => { return { LocationName:o, selected: true } });

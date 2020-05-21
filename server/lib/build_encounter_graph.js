@@ -12,8 +12,8 @@ const getAllUsers = function() {
 
         let include = {
             "_id": 1,
-            "sso.email": 1,
-            "sso.profile.name": 1
+            "email": 1,
+            "name": 1
         }
 
         User.find({}, include).exec(async function(err, allUsers) {
@@ -52,8 +52,8 @@ function getAllEncounters() {
 
         let include = { // returns only email, profile name, and _id
             "_id": 1,
-            "sso.email": 1,
-            "sso.profile.name": 1
+            "email": 1,
+            "name": 1
         }
 
         Encounter.find({
@@ -95,11 +95,11 @@ function buildEncounterGraph(users, encounters) {
             // Number of Encounters
             var numEncounters = 0;
             if (enc.users[0] != undefined && enc.users[1] != undefined) {
-                if (g.hasEdge(enc.users[0].sso.email, enc.users[1].sso.email)) {
-                    numEncounters = g.edge(enc.users[0].sso.email, enc.users[1].sso.email);
+                if (g.hasEdge(enc.users[0].email, enc.users[1].email)) {
+                    numEncounters = g.edge(enc.users[0].email, enc.users[1].email);
                 }
 
-                g.setEdge(enc.users[0].sso.email, enc.users[1].sso.email, numEncounters + 1);
+                g.setEdge(enc.users[0].email, enc.users[1].email, numEncounters + 1);
 
             }
 

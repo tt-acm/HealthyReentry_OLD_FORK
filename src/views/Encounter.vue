@@ -25,7 +25,7 @@
   <p v-if="encountersToday && encountersToday.length > 0" class="mb-1 mt-3">Today's Recorded Encounter(s):</p>
   <div v-if="encountersToday  && encountersToday.length > 0" class="row mx-0 mb-2">
     <div v-for="encounter in encountersToday">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.sso.profile.name}}</span>
+      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
     </div>
   </div>
 
@@ -50,7 +50,7 @@
 
   <div v-if="encountered" class="row mx-0 mb-1">
     <div v-for="encounter in encountered">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.sso.profile.name}}</span>
+      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
       <button type="button" class="close text-center" aria-label="Close" v-on:click="removeUser(encounter)" data-toggle="modal" data-target="#deleteUserModal">
         <span class="text-center" aria-hidden="true">&times;</span>
       </button>
@@ -94,7 +94,7 @@
   <br>
   <md-list>
     <md-list-item class="py-0 mx-auto">
-      <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="!disableSubmitDate && !disableSubmitUser" id="nextBtn" style="width:240px">
+      <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="disableSubmitUser" id="nextBtn" style="width:240px">
         <h6 class="mb-0">Next</h6>
       </md-button>
     </md-list-item>
@@ -123,7 +123,7 @@
             <li class="list-group-item"><b>Name(s):</b>
               <div v-if="encountered.length>0">
                 <div v-for="encounter in encountered">
-                  <span class="mx-1">{{encounter.sso.profile.name}}</span>
+                  <span class="mx-1">{{encounter.name}}</span>
                 </div>
               </div>
             </li>
@@ -139,7 +139,7 @@
 
       <md-dialog-actions class="mx-4 my-2">
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary md-raised" @click="showDialog = false">Submit</md-button>
+        <md-button class="md-primary md-raised" @click="showDialog = false;saveEncounters()">Submit</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -152,6 +152,7 @@
 <script src="./vue-browser-detect-plugin.umd.js"></script>
 
 <script>
+import Vue from 'vue';
 import Vuex from 'vuex';
 import autocomplete from "@/components/autoComplete.vue";
 import {
@@ -178,23 +179,26 @@ export default {
   beforeMount() {
     this.$api.get("/api/user/get-all").then(all => {
 
+      console.log("getalluser", all);
+
       const arrayToObject = (array) =>
         array.reduce((obj, item) => {
-          obj[item.sso.profile.name + "_" + item.sso.email] = item
+          obj[item.name + "_" + item.email] = item
           return obj
         }, {})
 
-      const dictionary = arrayToObject(all);
+      const dictionary = arrayToObject(all.data);
+      console.log("dictionary", dictionary);
       Vue.set(this, "userDictionary", dictionary);
       Vue.set(this, "minUsers", Object.keys(dictionary));
     });
 
     this.$api.get("/api/encounters/find-frequent-encounters").then(mostEncountered => {
-      const userToday = mostEncountered.filter(u=>u.encounteredToday===true);
+      const userToday = mostEncountered.data.filter(u=>u.encounteredToday===true);
       console.log("userToday", userToday);
       this.encountersToday = userToday;
-      Vue.set(this, "frequentEncounters", mostEncountered.map(item=>item.sso.profile.name + "_" + item.sso.email));
-      Vue.set(this, "encountersToday", mostEncountered.filter(u=>u.encounteredToday===true));
+      Vue.set(this, "frequentEncounters", mostEncountered.data.map(item=>item.name + "_" + item.email));
+      Vue.set(this, "encountersToday", mostEncountered.data.filter(u=>u.encounteredToday===true));
 
       if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
     });
@@ -218,13 +222,13 @@ export default {
       todaySelected: true,
       date: new Date(),
       alerts: null,
-      disableSubmitDate: false,
+      // disableSubmitDate: false,
       disableSubmitUser: true,
       camera: 'off',
       encountersToday: null,
       isGroup: false,
       showDatePicker: false,
-      // frequentEncounters: null,
+      frequentEncounters: null,
       showDialog: false
     };
   },
@@ -234,12 +238,14 @@ export default {
     },
     encountered() {
       this.disableSubmitUser = true;
+      console.log("this.encountered", this.encountered);
       if (this.encountered.length > 0) {
         // this.$emit("getNotification", [{
         //   message: "Please selector at least one TT employee as your encounter.",
         //   type: "warning"
         // }]);
         this.disableSubmitUser = false;
+        console.log("this.disableSubmitUser", this.disableSubmitUser);
       }
     }
   },
@@ -262,7 +268,7 @@ export default {
       this.searchUserByEmail(decodedString);
     },
     searchUserByEmail(emailStr){
-      if (emailStr === this.user.sso.email.toLowerCase()) {
+      if (emailStr === this.user.email.toLowerCase()) {
         this.$emit("getNotification", [{
           message: "Cannot add yourself as an encounter.",
           type: "warning"
@@ -340,10 +346,10 @@ export default {
       );
     },
     checkPast() {
-      this.disableSubmitDate = false;
+      // this.disableSubmitDate = false;
       if (this.date > new Date()) {
         //selected date is in the past
-        this.disableSubmitDate = true;
+        // this.disableSubmitDate = true;
 
         this.$emit("getNotification", [{
           message: "Selected date cannot be in the future.",
@@ -357,6 +363,7 @@ export default {
 
     },
     saveEncounters() {
+      console.log("this.encountered", this.encountered);
 
       var body = {
         encounters: this.encountered,
