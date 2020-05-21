@@ -1,14 +1,14 @@
 <template>
 <!-- <div class="mx-auto" style="transform: translateY(150%)"> -->
-<div class="mx-auto" id="mainControls">
-  <md-list>
+<div id="mainControls">
+  <md-list v-if="user">
     <md-list-item class="mx-auto">
       <router-link :to="{ name: 'status', params: { id: user._id}}">
         <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary text-center my-2">
           Report Your Health Status
         </button> -->
         <md-button class="md-raised md-accent menu-button">
-          <h6 class="my-3">Report Your Health Status</h6>
+          <h6 class="my-3 ">Report Your Health Status</h6>
         </md-button>
       </router-link>
     </md-list-item>
@@ -41,15 +41,13 @@
 <script>
 // import store from "store/index.js";
 
+import Vuex from 'vuex';
+
 export default {
   // props: ["user"],
   created() {
-    if (this.$auth.userDB) this.user = this.$auth.userDB;
-    console.log("this.user", this.user);
   },
   mounted() {
-    if (this.$auth.userDB) this.user = this.$auth.userDB;
-    console.log("this.user2", this.user);
     // $(window).on('load',function(){
     //     $('#exampleModalLong').modal('show');
     // });
@@ -67,14 +65,11 @@ export default {
   },
   data() {
     return {
-      user:{
-        _id: null
-      }
     };
   },
-  // computed: Vuex.mapState({
-  //   user: state => state.user,
-  // }),
+  computed: Vuex.mapState({
+    user: state => state.user,
+  }),
   methods: {}
 };
 </script>

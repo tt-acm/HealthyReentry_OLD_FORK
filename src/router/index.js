@@ -77,14 +77,7 @@ export default new VueRouter({
       path: '/',
       name: 'menu',
       component: Menu,
-      // beforeEnter: authGuard,
-      beforeEnter: (to, from, next) => {
-        console.log("store.state", store.state);
-        next();
-        // if (!store.state.user) return next('/home');
-        // else if (store.state.user.dateOfConsent) return next('/menu');
-        // else return next();
-      },
+      beforeEnter: authGuard,
       meta: {
         title: route => "Healthy Reentry: Menu"
       },
@@ -97,6 +90,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Record Your Encounter"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -106,6 +100,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Record Your Status"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -115,6 +110,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: View Your QR Code"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
@@ -124,6 +120,7 @@ export default new VueRouter({
       meta: {
         title: route => "Healthy Reentry: Admin View"
       },
+      beforeEnter: authGuard,
       props: true
     },
     {
