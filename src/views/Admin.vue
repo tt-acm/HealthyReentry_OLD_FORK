@@ -387,7 +387,7 @@ export default {
     downloadSelectedAsCSV() {
       let tot = "Name,Status,Office,LastUpdated";
       let csv = this.selectedUsers
-                    .map(u => `${u.name},${u.status.label},${u.officeCode},${String(moment(u.lastUpdated).format('lll')).replace(/\,/g, '')}`)
+                    .map(u => `${u.name},${u.status.label},${u.officeCode},${String(this.moment(u.lastUpdated).format('lll')).replace(/\,/g, '')}`)
                     .reduce((tot, cur) => tot + "\n" + cur, tot);
       let dlTrigger = document.createElement('a');
       dlTrigger.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
@@ -441,7 +441,7 @@ export default {
       let officesSet = new Set();
 
       let apiurl = `/api/admin/get-all-users`;
-      $.get(apiurl)
+      this.$api.get(apiurl)
         .then(users => {
           users.sort((a, b) => (a.sso.profile.name < b.sso.profile.name) ? -1 : 1)
           that.users = users;
@@ -464,7 +464,7 @@ export default {
 
       let that = this;
 
-      $.post("/api/admin/update-users", this.userUpdateData)
+      this.$api.post("/api/admin/update-users", this.userUpdateData)
         .then(updatedUsers => {
 
           updatedUsers.forEach(nu => {

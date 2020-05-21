@@ -184,7 +184,7 @@
           <h6>Status Detail</h6>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><b>Name:</b> {{user.name}}</li>
+          <li class="list-group-item"><b class="mr-2">Name:</b> {{user.name}}</li>
           <li class="list-group-item"><b>Status:</b>
             <div class="col mt-2 text-center">
               <md-icon :md-src="iconPath[selectedStatus]" />
@@ -198,10 +198,12 @@
 
 
     <md-dialog-actions class="mx-4 my-2">
-      <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-      <md-button class="md-primary md-raised" @click="showDialog = false">Submit</md-button>
+      <md-button class="md-primary" @click="showDialog=false">Close</md-button>
+      <md-button class="md-primary md-raised" @click="showDialog=false; submitEncounter()">Submit</md-button>
     </md-dialog-actions>
   </md-dialog>
+
+  <!-- notifications -->
 
 </div>
 </template>
@@ -211,11 +213,13 @@ var tabIds = ["tab-green", "tab-orange", "tab-red", "tab-blue"]
 export default {
   // props: ["user"],
   created() {
-    if (this.$auth.user) this.user = this.$auth.user;
+    if (this.$auth.userDB) this.user = this.$auth.userDB;
 
-    $.get("/api/status/get-current").then(curStatus => {
+    this.$api.get("/api/status/get-current").then(returnedStatus => {
+      var curStatus = returnedStatus.data;
       console.log("curStatus", curStatus);
       if (curStatus) {
+        console.log("status exists");
         this.latestStatus = curStatus;
 
         if (curStatus.status !== null) {
@@ -226,16 +230,16 @@ export default {
 
           if (this.latestStatus.status !== 3) { //hahs status and not blue
             if (this.latestStatus.status > 0) { //either orange or red
-              this.iconPath[0] = "/public/imgs/lens-green-disabled2.svg"
-              if (this.latestStatus.status === 2) this.iconPath[1] = "/public/imgs/lens-orange-disabled2.svg" //red
+              this.iconPath[0] = "/imgs/lens-green-disabled2.svg"
+              if (this.latestStatus.status === 2) this.iconPath[1] = "/imgs/lens-orange-disabled2.svg" //red
             }
           }
         }
         this.latestStatusDate = String(new Date(curStatus.date)).split(" ").slice(1, 4).join("/");
+      } else {
+        this.selectedStatus = 0; //default to green
+        console.log("in created", this.selectedStatus);
       }
-      // else{
-      //   this.selectedStatus === 0;//default to green
-      // }
     });
   },
   mounted() {
@@ -259,6 +263,8 @@ export default {
     return {
       user: null,
       showDialog: false,
+      submitSuccess: false,
+      notificationDuration: 4000,
       selectedStatus: null,
       latestStatus: {
         status: 0
@@ -300,7 +306,7 @@ export default {
   // }),
   methods: {
     showDisplayDate(date) {
-      return moment(date).format('ll');
+      return this.moment(date).format('ll');
     },
     // alertGreen() {
     //   if (!this.enableBlue) {
@@ -321,20 +327,17 @@ export default {
     //   }
     // },
     submitEncounter() {
+      console.log("submitting status");
       // use this when status submitted -- this saves number
       const body = {
         status: this.selectedStatus
       }
-      $.post("/api/status/report", body).then(savedStatus => {
+      this.$api.post("/api/status/report", body).then(savedStatus => {
         console.log("status Saved", savedStatus);
         this.latestStatus = savedStatus;
-        // window.alert("Status are successfully reported!")
 
         if (savedStatus) {
-          this.$emit("getNotification", [{
-            message: "Status successfully recorded.",
-            type: "success"
-          }]);
+          this.$emit("getNotification");
 
           this.$router.push({
             name: 'menu'

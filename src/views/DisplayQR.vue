@@ -36,7 +36,7 @@ import QRCode  from 'qrcode';
 export default {
   // props: ["user"],
   created() {
-    if (this.$auth.user) this.user = this.$auth.user;
+    if (this.$auth.userDB) this.user = this.$auth.userDB;
   },
   mounted() {
     // $(window).on('load',function(){
