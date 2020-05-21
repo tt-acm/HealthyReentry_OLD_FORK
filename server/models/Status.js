@@ -57,12 +57,12 @@ status.save(function(err,savedEncounter){
 });
 
  */
-statusSchema.pre("save", function(next, user, callback) {
+statusSchema.pre("save", function(next, user) {
     var status = this;
 
     status.date = new Date();
 
-    next(callback);
+    next();
 });
 
 
