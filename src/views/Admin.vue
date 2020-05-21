@@ -387,7 +387,7 @@ export default {
     downloadSelectedAsCSV() {
       let tot = "Name,Status,Office,LastUpdated";
       let csv = this.selectedUsers
-                    .map(u => `${u.name},${u.status.label},${u.officeCode},${String(moment(u.lastUpdated).format('lll')).replace(/\,/g, '')}`)
+                    .map(u => `${u.name},${u.status.label},${u.officeCode},${String(this.moment(u.lastUpdated).format('lll')).replace(/\,/g, '')}`)
                     .reduce((tot, cur) => tot + "\n" + cur, tot);
       let dlTrigger = document.createElement('a');
       dlTrigger.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));

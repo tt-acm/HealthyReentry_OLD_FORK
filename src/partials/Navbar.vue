@@ -6,17 +6,17 @@
         <small style="color:lightblue;margin-left:4px"><i>alpha</i></small>
       </a>
 
-      <md-badge v-if="$auth.isAuthenticated && $auth.user" class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">
+      <md-badge v-if="$auth.isAuthenticated && $auth.userDB" class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">
         <md-menu md-size="small" md-align-trigger>
           <md-button class="md-icon-button" style="width=32px" md-menu-trigger>
             <md-avatar style="transform: scale(0.8);">
               <!-- <img src="https://gravatar.com/avatar/4dacc85086497a31cf2c646031d2cb01?d=retro" alt="Avatar"> -->
-              <img :src="$auth.user.picture" alt="Avatar">
+              <img :src="$auth.userDB.picture" alt="Avatar">
             </md-avatar>
           </md-button>
 
           <md-menu-content>
-            <md-menu-item disabled>{{$auth.user.name}}</md-menu-item>
+            <md-menu-item disabled>{{$auth.userDB.name}}</md-menu-item>
             <md-menu-item>Profile</md-menu-item>
             <md-menu-item @click="logout()">Log out</md-menu-item>
           </md-menu-content>
@@ -35,7 +35,9 @@ export default {
   name: 'Navbar',
   methods: {
     login() {
+      // console.log(this.$route.fullPath);
       this.$auth.loginWithRedirect();
+      // this.$auth.loginWithRedirect({ appState: { targetUrl: this.$route.fullPath }});
     },
     logout() {
       this.$auth.logout({

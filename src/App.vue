@@ -37,7 +37,7 @@ export default {
   methods: {
     getUser() {
       console.log("getting user", this.$auth.isAuthenticated);
-      console.log("this.user", this.$auth.user);
+      console.log("this.user", this.$auth.userDB);
 
     },
     login() {

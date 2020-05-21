@@ -43,8 +43,13 @@
 
 export default {
   // props: ["user"],
-  created() {},
+  created() {
+    if (this.$auth.userDB) this.user = this.$auth.userDB;
+    console.log("this.user", this.user);
+  },
   mounted() {
+    if (this.$auth.userDB) this.user = this.$auth.userDB;
+    console.log("this.user2", this.user);
     // $(window).on('load',function(){
     //     $('#exampleModalLong').modal('show');
     // });

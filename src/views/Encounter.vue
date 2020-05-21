@@ -315,7 +315,7 @@ export default {
       }
     },
     formatDate() {
-      var formattedDate = moment(this.date).format('YYYY/MM/DD');
+      var formattedDate = this.moment(this.date).format('YYYY/MM/DD');
       // Vue.set(this, "date", formattedDate);
       return formattedDate;
     },
