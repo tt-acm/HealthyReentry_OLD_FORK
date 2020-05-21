@@ -79,7 +79,8 @@ export default new VueRouter({
       component: Menu,
       // beforeEnter: authGuard,
       beforeEnter: (to, from, next) => {
-        console.log("this", this.$auth.user);
+        console.log("store.state", store.state);
+        next();
         // if (!store.state.user) return next('/home');
         // else if (store.state.user.dateOfConsent) return next('/menu');
         // else return next();
