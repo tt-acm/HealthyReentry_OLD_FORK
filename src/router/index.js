@@ -52,7 +52,7 @@ export default new VueRouter({
     //   // beforeEnter: authGuard
     // }
     {
-      path: '/',
+      path: '/intro',
       name: 'home',
       component: Intro,
       meta: {
@@ -72,7 +72,7 @@ export default new VueRouter({
       props: true
     },
     {
-      path: '/menu',
+      path: '/',
       name: 'menu',
       component: Menu,
       beforeEnter: authGuard,

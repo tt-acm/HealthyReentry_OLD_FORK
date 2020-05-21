@@ -37,7 +37,7 @@ const errHandler = async function (err, req, res, next) {
 
 
 const addUserToReq = async function(req, res, next) {
-  // console.log("adding user to req", req.headers);
+  console.log("adding user to REQ", req.headers.email);
   let userEmail = req.headers.email;
   let user = await User.findOne({email: userEmail});
   if (user) {
@@ -57,7 +57,7 @@ router.get('/test', function(req, res) {
 
 
 // protected routes
-router.use('/users', [checkJwt, errHandler, addUserToReq], require('./user'));
+router.use('/user', [checkJwt, errHandler, addUserToReq], require('./user'));
 router.use('/admin', [checkJwt, errHandler, addUserToReq], require('./admin'));
 router.use('/encounters', [checkJwt, errHandler, addUserToReq], require('./encounters'));
 router.use('/status', [checkJwt, errHandler, addUserToReq], require('./status'));
