@@ -40,11 +40,6 @@ const mongoose = require('mongoose');
  *           permissions: { "admin": true, "read": true, "write": false }
  */
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    // index: true,
-    default: ""
-  },
   name: {
     type: String,
     required: true,
