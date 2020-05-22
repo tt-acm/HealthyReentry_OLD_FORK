@@ -25,7 +25,7 @@
   <p v-if="encountersToday && encountersToday.length > 0" class="mb-1 mt-3">Today's Recorded Encounter(s):</p>
   <div v-if="encountersToday  && encountersToday.length > 0" class="row mx-0 mb-2">
     <div v-for="encounter in encountersToday">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
+      <span class="badge badge-pill badge-info mx-1">{{encounter.name}}</span>
     </div>
   </div>
 
@@ -54,7 +54,7 @@
 
   <div v-if="encountered" class="row mx-0 mb-1">
     <div v-for="encounter in encountered">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
+      <span class="badge badge-pill badge-info mx-1">{{encounter.name}}</span>
       <button type="button" class="close text-center" aria-label="Close" v-on:click="removeUser(encounter)" data-toggle="modal" data-target="#deleteUserModal">
         <span class="text-center" aria-hidden="true">&times;</span>
       </button>
