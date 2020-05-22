@@ -1,10 +1,14 @@
 <template>
   <div>
     <md-toolbar class="md-primary" id="appHeader">
-      <a class="md-title" href="/">
+      <router-link class="md-title" :to="{ name: 'menu' }">
         <span>Healthy Reentry</span>
         <small style="color:lightblue;margin-left:4px"><i>beta</i></small>
-      </a>
+      </router-link>
+      <!-- <a  href="/">
+        <span>Healthy Reentry</span>
+        <small style="color:lightblue;margin-left:4px"><i>beta</i></small>
+      </a> -->
 
       <md-badge v-if="$auth.isAuthenticated && $auth.userDB" class="md-accent" md-content="12" style="margin-left:auto;margin-top:2px;">
         <md-menu md-size="small" md-align-trigger>
