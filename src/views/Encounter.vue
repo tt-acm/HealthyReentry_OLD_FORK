@@ -17,7 +17,7 @@
         </a>
       </div>
       <p class="mb-0">
-        For a group interaction, check the <i>Group</i> box (only one person needs to submit to account for everyone in the group).
+        For a group encounter, check the <i>Group</i> box (only one person needs to submit to account for everyone in the group).
       </p>
     </div>
   </div>
@@ -31,7 +31,7 @@
 
   <div class="d-flex align-items-end">
     <b class="mt-3 mb-0">Your Encounter(s):</b>
-    <a class="ml-1" href="https://core-studio.gitbook.io/encounter/faq#what-counts-as-an-interaction-that-should-be-logged" target="blank">
+    <a class="ml-1" href="https://app.gitbook.com/@core-studio/s/healthy-reentry/faq#what-counts-as-an-encounter-that-should-be-logged" target="blank">
       <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" ></md-icon>
     </a>
   </div>
@@ -66,7 +66,7 @@
     <div class="d-flex align-items-end">
       <label class="form-check-label d-flex" for="defaultCheck1">
         Group
-        <a class="mb-0 ml-1" href="https://core-studio.gitbook.io/encounter/faq#when-should-i-use-the-group-checkbox" target="blank">
+        <a class="mb-0 ml-1" href="https://app.gitbook.com/@core-studio/s/healthy-reentry/faq#when-should-i-use-the-group-checkbox" target="blank">
           <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" ></md-icon>
         </a>
       </label>

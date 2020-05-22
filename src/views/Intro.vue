@@ -19,7 +19,7 @@
             </md-button>
           <!-- </router-link> -->
           <!-- <a class="btn btn-primary" href="/users/login-tt">Get Started</a> -->
-          <div><a class="btn btn-link" href="https://core-studio.gitbook.io/encounter/testing-guidance/guide" target="_blank">Directions</a> </div>
+          <div><a class="btn btn-link" href="https://core-studio.gitbook.io/healthy-reentry/testing-guidence/guide" target="_blank">Directions</a> </div>
 
         </div>
       </div>
