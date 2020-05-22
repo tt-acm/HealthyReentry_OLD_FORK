@@ -54,9 +54,10 @@ export default new VueRouter({
     //   // beforeEnter: authGuard
     // }
     {
-      path: '/intro',
+      path: '/',
       name: 'home',
       component: Intro,
+      beforeEnter: authGuard,
       meta: {
         title: route => "Healthy Reentry: Welcome"
       },
@@ -66,11 +67,10 @@ export default new VueRouter({
       path: '/disclosure',
       name: 'disclosure',
       component: Disclosure,
-      // beforeEnter: (to, from, next) => {
-      //   if (!store.state.user) return next('/home');
-      //   else if (store.state.user.dateOfConsent) return next('/menu');
-      //   else return next();
-      // },
+      beforeEnter: authGuard,
+      meta: {
+        title: route => "Healthy Reentry: Disclosure and Consent"
+      },
       props: true
     },
     {

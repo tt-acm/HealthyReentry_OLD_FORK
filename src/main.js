@@ -14,7 +14,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 import 'bootstrap';
 import './css/app.scss';
-
+console.log("vue", Vue);
 
 import VueMaterial from 'vue-material'
 // import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
