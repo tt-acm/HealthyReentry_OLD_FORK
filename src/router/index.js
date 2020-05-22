@@ -74,7 +74,7 @@ export default new VueRouter({
       props: true
     },
     {
-      path: '/',
+      path: '/menu',
       name: 'menu',
       component: Menu,
       beforeEnter: authGuard,

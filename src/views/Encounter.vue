@@ -41,7 +41,11 @@
       <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete>
       <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p>
     </div>
-    <div class="mt-2 ml-2 mr-auto">
+    <div v-if="disableQRScanning" class="mt-2 ml-2 mr-auto">
+      <md-tooltip md-direction="top">Scanning QR code is not available on current browser</md-tooltip>
+      <i class="fas fa-qrcode fa-2x text-muted"></i>
+    </div>
+    <div v-else class="mt-2 ml-2 mr-auto">
       <md-tooltip md-direction="top">Open camera to scan QR code</md-tooltip>
       <i class="fas fa-qrcode fa-2x" @click="preLaunchCamera()"></i>
     </div>
@@ -229,7 +233,8 @@ export default {
       isGroup: false,
       showDatePicker: false,
       frequentEncounters: null,
-      showDialog: false
+      showDialog: false,
+      disableQRScanning: true
     };
   },
   watch: {
@@ -255,10 +260,11 @@ export default {
   methods: {
     preLaunchCamera() {
       if (this.$browserDetect.isChromeIOS) {
-        this.$api.$emit("getNotification", [{
-          message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
-          type: "warning"
-        }]);
+        // this.$api.$emit("getNotification", [{
+        //   message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
+        //   type: "warning"
+        // }]);
+        this.disableQRScanning = true;
       }
       else this.camera = "auto";
     },
@@ -374,10 +380,7 @@ export default {
       this.$api.post("/api/encounters/add-many", body).then(result => {
         // console.log("result", result);
         if (result) {
-          this.$emit("getNotification", [{
-            message: "Encounter submitted successfully.",
-            type: "success"
-          }]);
+          this.$emit("encounterMsg");
           this.$router.push({
             name: 'menu'
           }); //return back to menu after saving

@@ -6,6 +6,8 @@ export const authGuard = (to, from, next) => {
 
   const fn = () => {
     // If the user is authenticated, continue with the route
+    console.log("to",to);
+    console.log("authService.isAuthenticated", authService.isAuthenticated);
     if (authService.isAuthenticated) {
       if (authService.userDB) {
         store.commit('setUser', authService.userDB);
@@ -20,7 +22,7 @@ export const authGuard = (to, from, next) => {
       }
       // return next();
       function routeUserFunction(user) {
-        console.log("to",to);
+        // console.log("to",to);
         console.log("store.state",store.state);
         console.log("user in router",user);
         // if (!authService.userDB) return next();//un-authenticated stays at home
