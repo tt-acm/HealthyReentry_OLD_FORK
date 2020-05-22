@@ -45,9 +45,9 @@
       <md-tooltip md-direction="top">Scanning QR code is not available on current browser</md-tooltip>
       <i class="fas fa-qrcode fa-2x text-muted"></i>
     </div>
-    <div v-else class="mt-2 ml-2 mr-auto">
+    <div v-else class="mt-2 ml-2 mr-auto" @click="preLaunchCamera()">
       <md-tooltip md-direction="top">Open camera to scan QR code</md-tooltip>
-      <i class="fas fa-qrcode fa-2x" @click="preLaunchCamera()"></i>
+      <i class="fas fa-qrcode fa-2x"></i>
     </div>
   </div>
   <small>NOTE: You will only be able to search for employees who have opted into the app.</small>
@@ -73,6 +73,7 @@
     </div>
 
   </div>
+  {{camera}}
   <qrcode-stream v-if="camera!=='off'" @decode="onDecode" :camera="camera"></qrcode-stream>
 
   <div class="row">
@@ -105,7 +106,7 @@
 
     <md-list-item class="mx-auto py-0">
       <md-button class="md-primary mx-auto">
-        <router-link :to="{ name: 'menu' }"> <p class="text-muted">Back</p> </router-link>
+        <router-link :to="{ name: 'menu' }"> <p class="text-muted mb-0">Back</p> </router-link>
       </md-button>
     </md-list-item>
   </md-list>
@@ -154,6 +155,7 @@
 </div>
 </template>
 <script src="./vue-browser-detect-plugin.umd.js"></script>
+<script src="vue-qrcode-reader.browser.js"></script>
 
 <script>
 import Vue from 'vue';
@@ -259,6 +261,7 @@ export default {
   }),
   methods: {
     preLaunchCamera() {
+      // console.log("camera!", this.$browserDetect.isChromeIOS);
       if (this.$browserDetect.isChromeIOS) {
         // this.$api.$emit("getNotification", [{
         //   message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
@@ -266,7 +269,10 @@ export default {
         // }]);
         this.disableQRScanning = true;
       }
-      else this.camera = "auto";
+      else {
+        this.disableQRScanning = false;
+        this.camera = "auto";
+      }
     },
     onDecode(incomingStr) {
       const decodedString = incomingStr.split("/").slice(-1)[0];
