@@ -234,7 +234,7 @@ export default {
       showDatePicker: false,
       frequentEncounters: null,
       showDialog: false,
-      disableQRScanning: true
+      disableQRScanning: false
     };
   },
   watch: {
@@ -275,10 +275,7 @@ export default {
     },
     searchUserByEmail(emailStr){
       if (emailStr === this.user.email.toLowerCase()) {
-        this.$emit("getNotification", [{
-          message: "Cannot add yourself as an encounter.",
-          type: "warning"
-        }]);
+        this.$emit("noDupUser");
       } else if (emailStr && emailStr.toLowerCase().indexOf("@thorntontomasetti.com") > 0) {
         var body = {
           "email": emailStr
@@ -286,19 +283,16 @@ export default {
         this.$api.post("/api/user/user-by-email", body).then(res => {
           const encountered = this.encountered.map(en=>en._id);
 
-          if (res && res.sso) {
+          if (res && res._id) {
             if (encountered.includes(res._id)){//encounter already exists
-              this.$emit("getNotification", [{
-                message: "Encounter already exists.",
-                type: "warning"
-              }]);
+              // this.$emit("encounterExists", [{
+              //   message: "Encounter already exists.",
+              //   type: "warning"
+              // }]);
             }
             else {
               this.encountered.push(res);//adding scanned user to encounter
-              this.$emit("getNotification", [{
-                message: "QR code scanned submitted successfully.",
-                type: "success"
-              }]);
+              this.$emit("scanSucceed");
 
               this.camera = 'off';
             }

@@ -335,7 +335,7 @@ export default {
         this.latestStatus = savedStatus;
 
         if (savedStatus) {
-          this.$emit("getNotification");
+          this.$emit("statusMsg");
 
           this.$router.push({
             name: 'menu'
