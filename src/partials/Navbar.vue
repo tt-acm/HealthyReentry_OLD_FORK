@@ -45,8 +45,9 @@ export default {
   methods: {
     login() {
       // console.log(this.$route.fullPath);
-      this.$auth.loginWithRedirect();
+      // this.$auth.loginWithRedirect();
       // this.$auth.loginWithRedirect({ appState: { targetUrl: this.$route.fullPath }});
+      if (this.$auth.isAuthenticated === false) this.$auth.loginWithRedirect();
     },
     logout() {
       this.$auth.logout({

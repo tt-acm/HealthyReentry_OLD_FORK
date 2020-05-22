@@ -13,11 +13,11 @@
 
             Get Started &raquo;
           </a> -->
-          <router-link :to="{ name: 'menu' }">
-            <md-button class="md-primary md-raised" style="width:280px">
+          <!-- <router-link :to="{ name: 'menu' }"> -->
+            <md-button class="md-primary md-raised" style="width:280px" @click="login()">
                Get Started &raquo;
             </md-button>
-          </router-link>
+          <!-- </router-link> -->
           <!-- <a class="btn btn-primary" href="/users/login-tt">Get Started</a> -->
           <div><a class="btn btn-link" href="https://core-studio.gitbook.io/encounter/testing-guidance/guide" target="_blank">Directions</a> </div>
 
@@ -36,6 +36,13 @@ export default {
     };
   },
   methods: {
+    login() {
+      if (this.$auth.isAuthenticated === false) this.$auth.loginWithRedirect();
+      // console.log("this.$auth", this.$auth);
+      // console.log(this.$route.fullPath);
+      // this.$auth.loginWithRedirect();
+      //
+    }
   }
 };
 </script>
