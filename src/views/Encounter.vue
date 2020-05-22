@@ -36,16 +36,29 @@
     </a>
   </div>
 
-  <div class="input-group mb-2 d-flex justify-content-between">
+  <div class="input-group mb-2 d-flex align-items-center">
     <div class="mt-1 ml-0 mr-2" style="min-width:18rem;">
-      <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete>
-      <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p>
+      <!-- <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete> -->
+
+      <md-autocomplete v-model="selectedEmployee" :md-options="minUsers">
+        <label>Search by email or name</label>
+
+        <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+          <md-highlight-text :md-term="term">{{ item }}</md-highlight-text>
+        </template>
+
+        <template slot="md-autocomplete-empty" slot-scope="{ term }">
+          No employees matching "{{ term }}" were found. <a @click="noop()">Create a new</a> one!
+        </template>
+      </md-autocomplete>
+
+      <!-- <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p> -->
     </div>
-    <div v-if="disableQRScanning" class="mt-2 ml-2 mr-auto">
+    <div v-if="disableQRScanning" class="mr-auto">
       <md-tooltip md-direction="top">Scanning QR code is not available on current browser</md-tooltip>
       <i class="fas fa-qrcode fa-2x text-muted"></i>
     </div>
-    <div v-else class="mt-2 ml-2 mr-auto" @click="preLaunchCamera()">
+    <div v-else class="mr-auto" @click="preLaunchCamera()">
       <md-tooltip md-direction="top">Open camera to scan QR code</md-tooltip>
       <i class="fas fa-qrcode fa-2x"></i>
     </div>
@@ -182,7 +195,9 @@ export default {
 
       const arrayToObject = (array) =>
         array.reduce((obj, item) => {
-          obj[item.name + "_" + item.email] = item
+          // obj[item.name + "_" + item.email] = item
+          // console.log("item", item.email);
+          obj[item.name] = item
           return obj
         }, {})
 
@@ -196,7 +211,7 @@ export default {
       const userToday = mostEncountered.data.filter(u=>u.encounteredToday===true);
       console.log("userToday", userToday);
       this.encountersToday = userToday;
-      Vue.set(this, "frequentEncounters", mostEncountered.data.map(item=>item.name + "_" + item.email));
+      // Vue.set(this, "frequentEncounters", mostEncountered.data.map(item=>item.name + "_" + item.email));
       Vue.set(this, "encountersToday", mostEncountered.data.filter(u=>u.encounteredToday===true));
 
       if (this.$route.params.scannedUser) this.searchUserByEmail(this.$route.params.scannedUser);
@@ -213,6 +228,7 @@ export default {
   },
   data() {
     return {
+      selectedEmployee: null,
       splitChar: "",
       encountered: [],
       userDictionary: [],
@@ -227,12 +243,15 @@ export default {
       encountersToday: null,
       isGroup: false,
       showDatePicker: false,
-      frequentEncounters: null,
+      // frequentEncounters: null,
       showDialog: false,
       disableQRScanning: false
     };
   },
   watch: {
+    selectedEmployee() {
+      console.log("selected  User Changed", this.selectedEmployee);
+    },
     encountered() {
       this.disableSubmitUser = true;
       console.log("this.encountered", this.encountered);
@@ -250,6 +269,9 @@ export default {
     user: state => state.user,
   }),
   methods: {
+    addToUser() {
+      console.log("getting clicked", this.selectedEmployee);
+    },
     checkFuture(date) {
       return new Date() <= date;
     },
