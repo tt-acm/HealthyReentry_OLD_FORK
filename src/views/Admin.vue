@@ -353,7 +353,9 @@ export default {
 
   },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log("enumStatusMap", enumStatusMap);
+  },
   data() {
     return {
       pageNo: 1,
@@ -404,6 +406,8 @@ export default {
                             .map(o => o.LocationName);
       let officeFilteredUsers = this.users.filter(u => officeArr.includes(u.location));
 
+      console.log("officeFilteredUsers", officeFilteredUsers);
+
       let nameFilteredUsers = officeFilteredUsers;
       if(this.nameFilter !== "") {
         let nfLower = this.nameFilter.toLowerCase();
@@ -429,7 +433,7 @@ export default {
           lastUpdatedFormatted: updateDate,
           lastUpdated: hasStatus ? u.status.date : null,
           dateOfConsent: u.dateOfConsent ? new Date(u.dateOfConsent) : 0,
-          dateOfConsentFormatted: u.dateOfConsent ? new Date(u.dateOfConsent).toDateString() : 'error'
+          dateOfConsentFormatted: u.dateOfConsent ? new Date(u.dateOfConsent).toDateString() : 'Not Available'
         };
         return user;
       });
@@ -442,9 +446,11 @@ export default {
 
       let apiurl = `/api/admin/get-all-users`;
       this.$api.get(apiurl)
-        .then(users => {
+        .then(userData => {
+          var users = userData.data;
           users.sort((a, b) => (a.name < b.name) ? -1 : 1)
           that.users = users;
+          console.log("that.users", that.users);
           that.users.forEach(u => {
             let loc = u.location || 'unknown';
             officesSet.add(loc);

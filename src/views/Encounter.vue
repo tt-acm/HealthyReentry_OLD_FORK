@@ -12,7 +12,7 @@
         <p class="mb-0">
           Log ALL encounters with TT colleagues where there is a breach of our current protocol.
         </p>
-        <a class="ml-1" href="https://spark.thorntontomasetti.com/people/DStauthamer@ThorntonTomasetti.com/blog/2020/05/14/reentry-protocols-and-toolkit" target="blank">
+        <a class="ml-1" href="https://spark.thorntontomasetti.com/docs/DOC-17243" target="blank">
           <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" style="color:white"></md-icon>
         </a>
       </div>
@@ -25,7 +25,7 @@
   <p v-if="encountersToday && encountersToday.length > 0" class="mb-1 mt-3">Today's Recorded Encounter(s):</p>
   <div v-if="encountersToday  && encountersToday.length > 0" class="row mx-0 mb-2">
     <div v-for="encounter in encountersToday">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
+      <span class="badge badge-pill badge-info mx-1">{{encounter.name}}</span>
     </div>
   </div>
 
@@ -41,7 +41,11 @@
       <autocomplete v-if="minUsers.length > 0" label="Encounters:" v-bind:items="minUsers" v-bind:split="splitChar" :frequentEncounters="frequentEncounters" placeholder="Search by email or name" @sendBack="getAutoFillUser"></autocomplete>
       <p v-else class="text-muted"> No other user is available at this moment, please check again later.</p>
     </div>
-    <div class="mt-2 ml-2 mr-auto">
+    <div v-if="disableQRScanning" class="mt-2 ml-2 mr-auto">
+      <md-tooltip md-direction="top">Scanning QR code is not available on current browser</md-tooltip>
+      <i class="fas fa-qrcode fa-2x text-muted"></i>
+    </div>
+    <div v-else class="mt-2 ml-2 mr-auto">
       <md-tooltip md-direction="top">Open camera to scan QR code</md-tooltip>
       <i class="fas fa-qrcode fa-2x" @click="preLaunchCamera()"></i>
     </div>
@@ -50,7 +54,7 @@
 
   <div v-if="encountered" class="row mx-0 mb-1">
     <div v-for="encounter in encountered">
-      <span class="badge badge-pill badge-light mx-1">{{encounter.name}}</span>
+      <span class="badge badge-pill badge-info mx-1">{{encounter.name}}</span>
       <button type="button" class="close text-center" aria-label="Close" v-on:click="removeUser(encounter)" data-toggle="modal" data-target="#deleteUserModal">
         <span class="text-center" aria-hidden="true">&times;</span>
       </button>
@@ -229,7 +233,8 @@ export default {
       isGroup: false,
       showDatePicker: false,
       frequentEncounters: null,
-      showDialog: false
+      showDialog: false,
+      disableQRScanning: false
     };
   },
   watch: {
@@ -255,10 +260,11 @@ export default {
   methods: {
     preLaunchCamera() {
       if (this.$browserDetect.isChromeIOS) {
-        this.$api.$emit("getNotification", [{
-          message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
-          type: "warning"
-        }]);
+        // this.$api.$emit("getNotification", [{
+        //   message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
+        //   type: "warning"
+        // }]);
+        this.disableQRScanning = true;
       }
       else this.camera = "auto";
     },
@@ -269,10 +275,7 @@ export default {
     },
     searchUserByEmail(emailStr){
       if (emailStr === this.user.email.toLowerCase()) {
-        this.$emit("getNotification", [{
-          message: "Cannot add yourself as an encounter.",
-          type: "warning"
-        }]);
+        this.$emit("noDupUser");
       } else if (emailStr && emailStr.toLowerCase().indexOf("@thorntontomasetti.com") > 0) {
         var body = {
           "email": emailStr
@@ -280,19 +283,16 @@ export default {
         this.$api.post("/api/user/user-by-email", body).then(res => {
           const encountered = this.encountered.map(en=>en._id);
 
-          if (res && res.sso) {
+          if (res && res._id) {
             if (encountered.includes(res._id)){//encounter already exists
-              this.$emit("getNotification", [{
-                message: "Encounter already exists.",
-                type: "warning"
-              }]);
+              // this.$emit("encounterExists", [{
+              //   message: "Encounter already exists.",
+              //   type: "warning"
+              // }]);
             }
             else {
               this.encountered.push(res);//adding scanned user to encounter
-              this.$emit("getNotification", [{
-                message: "QR code scanned submitted successfully.",
-                type: "success"
-              }]);
+              this.$emit("scanSucceed");
 
               this.camera = 'off';
             }
@@ -374,10 +374,7 @@ export default {
       this.$api.post("/api/encounters/add-many", body).then(result => {
         // console.log("result", result);
         if (result) {
-          this.$emit("getNotification", [{
-            message: "Encounter submitted successfully.",
-            type: "success"
-          }]);
+          this.$emit("encounterMsg");
           this.$router.push({
             name: 'menu'
           }); //return back to menu after saving

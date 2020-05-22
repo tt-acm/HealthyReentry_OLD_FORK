@@ -5,19 +5,27 @@
   <!-- <md-content class="mx-3" style="max-width:600px"> -->
   <span v-model="notificationMsg"></span>
   <md-content class="mx-auto" style="padding-top:75px;padding-bottom:40px;">
-    <!-- <button class="btn btn-primary" @click="getUser()"> getuser</button> -->
-    <router-view class="px-3" @getNotification="showNotification"/>
+    <router-view class="px-3" @disclosureMsg="disclosureMsg" @statusMsg="statusMsg" @encounterMsg="encounterMsg" @noDupUser="noDupUser" @scanSucceed="scanSucceed"/>
   </md-content>
 
-
-  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showMsg" md-persistent>
+  <!-- Notifications -->
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showDisclosureMsg" md-persistent class="px-2" style="margin-bottom:55px; background-color: gray">
+    <span> Your consent has been submitted. A copy of the disclosure and consent has been sent to your TT email for reference (keep an eye out for an email from healthyreentry-notifications@thorntontomasetti.com).</span>
+  </md-snackbar>
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showStatusMsg" md-persistent style="margin-bottom:55px; background-color: gray">
     <span> Status successfully recorded.</span>
-    <!-- <md-button class="md-icon-button" @click="showMsg = false">
-      <md-icon class="fas fa-times"></md-icon>
-    </md-button> -->
+  </md-snackbar>
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showEncounterMsg" md-persistent style="margin-bottom:55px; background-color: gray">
+    <span> Encounter submitted successfully.</span>
+  </md-snackbar>
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="showDupUserMsg" md-persistent style="margin-bottom:55px; background-color: orange">
+    <span> Cannot add yourself as an encounter.</span>
+  </md-snackbar>
+  <md-snackbar md-position="center" :md-duration="notificationDuration" :md-active.sync="scanSucceedMsg" md-persistent style="margin-bottom:55px; background-color: gray">
+    <span> QR code scanned submitted successfully.</span>
   </md-snackbar>
 
-  <!-- <Footer /> -->
+  <Footer />
 </div>
 </template>
 
@@ -34,7 +42,11 @@ export default {
   data() {
     return {
       notificationDuration: 4000,
-      showMsg: false,
+      showDisclosureMsg: false,
+      showStatusMsg: false,
+      showEncounterMsg: false,
+      showDupUserMsg: false,
+      scanSucceedMsg: false,
       notificationMsg: "nothing"
     };
   },
@@ -59,16 +71,11 @@ export default {
         returnTo: window.location.origin
       });
     },
-    showNotification: function(alerts) {
-      console.log("got alert", alerts);
-      // this.notificationDuration = alerts.duration;
-      // this.notificationMsg = this.message;
-      this.showMsg = true;
-      // this.alerts = alerts;
-      // setTimeout(() => {
-      //   this.showMsg = false;
-      // }, this.notificationDuration);
-    }
+    statusMsg: function(alerts) { this.showStatusMsg = true; },
+    disclosureMsg: function() { this.showDisclosureMsg = true; },
+    encounterMsg: function() { this.showEncounterMsg = true; },
+    noDupUser: function() { this.showDupUserMsg = true; },
+    scanSucceed: function() { this.scanSucceedMsg = true; },
   }
 }
 </script>

@@ -26,7 +26,7 @@
         <h5 class="mt-2">No Signs or Symptoms</h5>
         <ul class="pl-3 mb-2">
           <li>Not sick (asymptomatic), <b>AND</b></li>
-          <li>No known exposure to any symptomic or COVID-positive individuals.</li>
+          <li>No known exposure to any symptomatic or COVID-positive individuals.</li>
           <hr class="my-2">
           <li>Fully recovered and cleared by a healthcare provider, or tested negative after possible exposure.</li>
         </ul>
@@ -43,7 +43,7 @@
         <h5 class="text-muted mt-2">No Signs or Symptoms</h5>
         <ul class="pl-3 mb-0 text-muted">
           <li>Not sick (asymptomatic), <b>AND</b></li>
-          <li>No known exposure to any symptomic or COVID-positive individuals.</li>
+          <li>No known exposure to any symptomatic or COVID-positive individuals.</li>
           <hr class="my-2">
           <li>Fully recovered and cleared by a healthcare provider, or tested negative after possible exposure.</li>
         </ul>
@@ -66,7 +66,7 @@
         <ul class="pl-3 mb-0">
           <li>Symptomatic of COVID-19, <b>OR</b></li>
           <li>Awaiting personal test results of COVID-19, <b>OR</b></li>
-          <li>Had in-person contact with symptomic individuals or someone who has tested positive for COVID-19.</li>
+          <li>Had in-person contact with symptomatic individuals or someone who has tested positive for COVID-19.</li>
         </ul>
         <div class="card mt-2">
           <div class="card-body bg-light p-1">
@@ -95,7 +95,7 @@
         <ul class="pl-3 mb-0 text-muted">
           <li>Symptomatic of COVID-19, <b>OR</b></li>
           <li>Awaiting personal test results of COVID-19, <b>OR</b></li>
-          <li>Had in-person contact with symptomic individuals or someone who has tested positive for COVID-19.</li>
+          <li>Had in-person contact with symptomatic individuals or someone who has tested positive for COVID-19.</li>
         </ul>
         <div class="card mt-2">
           <div class="card-body bg-light p-1">
@@ -335,7 +335,7 @@ export default {
         this.latestStatus = savedStatus;
 
         if (savedStatus) {
-          this.$emit("getNotification");
+          this.$emit("statusMsg");
 
           this.$router.push({
             name: 'menu'

@@ -120,7 +120,7 @@ async function triggerUpdates(triggerData, byAdmin) {
         let attachment = new Buffer(csv).toString('base64');
         sub = "Employee’s log";
         await sendEmail(variables.ADMIN_USERS, sub, adminEmailContent, attachment, filename);
-        
+
         // inform every second degree contact
         sub = "Attention: Refrain from coming to the office";
         await sendEmail(emails, sub, orangeContent);
@@ -184,7 +184,7 @@ function UpdateStatus(userEmails) {
 
 
     User.find({
-        "sso.email": {
+        "email": {
           $in: userEmails
         }
       })
