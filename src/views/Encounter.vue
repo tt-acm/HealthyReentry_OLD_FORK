@@ -12,7 +12,7 @@
         <p class="mb-0">
           Log ALL encounters with TT colleagues where there is a breach of our current protocol.
         </p>
-        <a class="ml-1" href="https://spark.thorntontomasetti.com/people/DStauthamer@ThorntonTomasetti.com/blog/2020/05/14/reentry-protocols-and-toolkit" target="blank">
+        <a class="ml-1" href="https://spark.thorntontomasetti.com/docs/DOC-17243" target="blank">
           <md-icon class="md-size-1x m-0" md-src="/imgs/info-circle-solid-small.svg" style="color:white"></md-icon>
         </a>
       </div>
