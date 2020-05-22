@@ -73,7 +73,6 @@
     </div>
 
   </div>
-  {{camera}}
   <qrcode-stream v-if="camera!=='off'" @decode="onDecode" :camera="camera"></qrcode-stream>
 
   <div class="row">
@@ -90,8 +89,9 @@
         <label class="form-check-label" for="gridRadios2">
           Pick a Date
         </label>
-        <p v-if="!todaySelected" class="text-muted">{{showDisplayDate(date)}}</p>
-        <vuejs-datepicker v-if="showDatePicker" v-model="date" :format="'MMM dd yyyy'" :inline="true" class="mb-4"></vuejs-datepicker>
+        <md-datepicker v-if="showDatePicker" v-model="date" :md-disabled-dates="checkFuture">
+          <label>Select date</label>
+        </md-datepicker>
       </div>
     </div>
   </div>
@@ -99,6 +99,7 @@
   <br>
   <md-list>
     <md-list-item class="py-0 mx-auto">
+      <md-tooltip md-direction="top" v-if="disableSubmitUser">Please select at least one encounter.</md-tooltip>
       <md-button class="md-primary md-raised" @click="showDialog=!showDialog" :disabled="disableSubmitUser" id="nextBtn" style="width:240px">
         <h6 class="mb-0">Next</h6>
       </md-button>
@@ -164,20 +165,12 @@ import autocomplete from "@/components/autoComplete.vue";
 import {
   QrcodeStream
 } from 'vue-qrcode-reader'
-// import appAlerts from "components/appAlerts.vue";
-import vuejsDatepicker from 'vuejs-datepicker';
 
-// app Alert
-// https://github.com/tt-acm/CORE.Bootstrap.jspkg/blob/958451080ef1115c1dc07bb2851882dcfad8628f/src/bootstrap/css/lib/bootstrap4/_alert.scss
-
-// const browser = detect();
-// console.log(browser.name);
 
 export default {
   name: "encounter",
   components: {
     autocomplete,
-    vuejsDatepicker,
     QrcodeStream
     // appAlerts
   },
@@ -240,9 +233,6 @@ export default {
     };
   },
   watch: {
-    date() {
-      this.checkPast();
-    },
     encountered() {
       this.disableSubmitUser = true;
       console.log("this.encountered", this.encountered);
@@ -260,8 +250,10 @@ export default {
     user: state => state.user,
   }),
   methods: {
+    checkFuture(date) {
+      return new Date() <= date;
+    },
     preLaunchCamera() {
-      // console.log("camera!", this.$browserDetect.isChromeIOS);
       if (this.$browserDetect.isChromeIOS) {
         // this.$api.$emit("getNotification", [{
         //   message: "This function cannot be used on Chrome IOS. Please scan the QR code using your device's native camera.",
@@ -350,23 +342,6 @@ export default {
         this.encountered.indexOf(e),
         1
       );
-    },
-    checkPast() {
-      // this.disableSubmitDate = false;
-      if (this.date > new Date()) {
-        //selected date is in the past
-        // this.disableSubmitDate = true;
-
-        this.$emit("getNotification", [{
-          message: "Selected date cannot be in the future.",
-          type: "warning"
-        }]);
-      }
-      else{
-        //time to hide the datepicker
-        // this.showDatePicker = false;
-      }
-
     },
     saveEncounters() {
       console.log("this.encountered", this.encountered);
